@@ -1,0 +1,120 @@
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 16
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blooddonation;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood_stored            |
+| bloodbank               |
+| donates                 |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manage_view             |
+| manage_view1            |
+| manage_view2            |
+| manager_manages         |
+| orders                  |
+| personnel               |
+| stock_has               |
+| works                   |
++-------------------------+
+14 rows in set (0.12 sec)
+
+mysql> select * from bloodbank cross join manager_manages;
++-------------+---------+-----------+------------------------+-------+------+-------------+-------------+-----------------+-------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   | EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------------+---------+-----------+------------------------+-------+------+-------------+-------------+-----------------+-------------+
+| BB105       | O105    | O- x 7    | National Blood Society | M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| BB105       | O105    | O- x 7    | National Blood Society | M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| BB105       | O105    | O- x 7    | National Blood Society | M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| BB105       | O105    | O- x 7    | National Blood Society | M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| BB105       | O105    | O- x 7    | National Blood Society | M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
+| BB105       | O105    | O- x 7    | National Blood Society | M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
+| BB104       | O104    | AB- x 1   | Athar Blood            | M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
+| BB103       | O103    | AB+ x 5   | Sankalp India          | M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
+| BB102       | O102    | B+ x 3    | Red Cross              | M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
+| BB101       | O101    | A+ x 2    | Rotary                 | M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
++-------------+---------+-----------+------------------------+-------+------+-------------+-------------+-----------------+-------------+
+30 rows in set (0.00 sec)
+
+mysql> select * from stock_has, blood_stored where stock_has.bloodid=blood_stored.bloodid;
++---------+---------+------+---------+-----------+-------------+------------+
+| StockID | BloodID | Qty  | BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+---------+------+---------+-----------+-------------+------------+
+| S101    | B101    |  125 | B101    | A+        | BB101       | 2022-01-07 |
+| S102    | B102    |  230 | B102    | B+        | BB102       | 2022-01-22 |
+| S103    | B103    |  900 | B103    | O+        | BB102       | 2022-02-22 |
+| S104    | B104    |  100 | B104    | AB+       | BB103       | 2022-01-09 |
+| S105    | B105    |   55 | B105    | A-        | BB105       | 2022-01-19 |
+| S106    | B106    |   35 | B106    | B-        | BB104       | 2022-01-29 |
+| S107    | B107    |  112 | B107    | O-        | BB103       | 2022-01-18 |
+| S108    | B108    |  118 | B108    | AB-       | BB105       | 2022-01-15 |
++---------+---------+------+---------+-----------+-------------+------------+
+8 rows in set (0.03 sec)
+
+mysql> select * from stock_has natural join blood_stored;
++---------+---------+------+-----------+-------------+------------+
+| BloodID | StockID | Qty  | BloodType | BloodBankID | DateOfReg  |
++---------+---------+------+-----------+-------------+------------+
+| B101    | S101    |  125 | A+        | BB101       | 2022-01-07 |
+| B102    | S102    |  230 | B+        | BB102       | 2022-01-22 |
+| B103    | S103    |  900 | O+        | BB102       | 2022-02-22 |
+| B104    | S104    |  100 | AB+       | BB103       | 2022-01-09 |
+| B105    | S105    |   55 | A-        | BB105       | 2022-01-19 |
+| B106    | S106    |   35 | B-        | BB104       | 2022-01-29 |
+| B107    | S107    |  112 | O-        | BB103       | 2022-01-18 |
+| B108    | S108    |  118 | AB-       | BB105       | 2022-01-15 |
++---------+---------+------+-----------+-------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> select * from stock_has left outer join blood_stored on
+    -> (stock_has.bloodid=blood_stored.bloodid);
++---------+---------+------+---------+-----------+-------------+------------+
+| StockID | BloodID | Qty  | BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+---------+------+---------+-----------+-------------+------------+
+| S101    | B101    |  125 | B101    | A+        | BB101       | 2022-01-07 |
+| S102    | B102    |  230 | B102    | B+        | BB102       | 2022-01-22 |
+| S103    | B103    |  900 | B103    | O+        | BB102       | 2022-02-22 |
+| S104    | B104    |  100 | B104    | AB+       | BB103       | 2022-01-09 |
+| S105    | B105    |   55 | B105    | A-        | BB105       | 2022-01-19 |
+| S106    | B106    |   35 | B106    | B-        | BB104       | 2022-01-29 |
+| S107    | B107    |  112 | B107    | O-        | BB103       | 2022-01-18 |
+| S108    | B108    |  118 | B108    | AB-       | BB105       | 2022-01-15 |
++---------+---------+------+---------+-----------+-------------+------------+
+8 rows in set (0.00 sec)
+
+mysql>
