@@ -1,0 +1,277 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 14
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blooddonation;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood_stored            |
+| bloodbank               |
+| customers               |
+| donates                 |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager_manages         |
+| orders                  |
+| personnel               |
+| stock_has               |
+| works                   |
++-------------------------+
+12 rows in set (1.01 sec)
+
+mysql> -- Subqueries
+mysql> drop customers;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'customers' at line 1
+mysql> desc customers;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| id      | varchar(20) | YES  |     | NULL    |       |
+| name    | varchar(20) | YES  |     | NULL    |       |
+| address | varchar(20) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+3 rows in set (0.83 sec)
+
+mysql> drop table customers;
+Query OK, 0 rows affected (1.39 sec)
+
+mysql> desc personnel;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstName | varchar(50)  | YES  |     | NULL    |       |
+| lastname  | varchar(50)  | YES  |     | NULL    |       |
+| address   | varchar(60)  | YES  |     | NULL    |       |
+| email     | varchar(100) | YES  |     | NULL    |       |
+| phone     | varchar(20)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.39 sec)
+
+mysql> desc manager;
+ERROR 1146 (42S02): Table 'blooddonation.manager' doesn't exist
+mysql> desc manager_manages;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| EmpID       | varchar(10) | NO   | PRI | NULL    |       |
+| Name        | varchar(30) | NO   |     | NULL    |       |
+| Phone       | varchar(30) | YES  |     | NULL    |       |
+| Address     | varchar(50) | YES  |     | NULL    |       |
+| email       | varchar(60) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql> select * from manager_manages;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
++-------+------+-------------+-------------+-----------------+-------------+
+5 rows in set (0.03 sec)
+
+mysql> -- subquery 1;
+mysql> insert into manager_manages values('M106','Mia','456789098','567,Chennai','mia@gmail.com','BB102');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> -- subquery 1;
+mysql> SELECT empid, name
+    -> from manager_manages
+    -> where name IN
+    -> (select name from manager_manages where BloodBankID='BB102');
++-------+------+
+| empid | name |
++-------+------+
+| M102  | Sia  |
+| M106  | Mia  |
++-------+------+
+2 rows in set (0.24 sec)
+
+mysql> DESC STOCK;
+ERROR 1146 (42S02): Table 'blooddonation.stock' doesn't exist
+mysql> DESC STOCK_hAS;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+mysql> -- SUBQUERY 2;
+mysql> SELECT STOCKID FROM STOCK_HAS WHERE STOCKID IN
+    -> (SELECT STOCKID
+    -> FROM STOCK_HAS
+    -> WHERE BLOODID='B103');
++---------+
+| STOCKID |
++---------+
+| S103    |
++---------+
+1 row in set (0.04 sec)
+
+mysql> -- SUBQUERY 3;
+mysql> SELECT STOCKID FROM STOCK_HAS WHERE QTY>
+    -> (SELECT QTY FROM STOCK_HAS WHERE BLOODID='B105');
++---------+
+| STOCKID |
++---------+
+| S101    |
+| S102    |
+| S103    |
+| S104    |
+| S107    |
+| S108    |
++---------+
+6 rows in set (0.05 sec)
+
+mysql> SELECT * FROM STOCK_HAS;
++---------+---------+------+
+| StockID | BloodID | Qty  |
++---------+---------+------+
+| S101    | B101    |  125 |
+| S102    | B102    |  230 |
+| S103    | B103    |  900 |
+| S104    | B104    |  100 |
+| S105    | B105    |   55 |
+| S106    | B106    |   35 |
+| S107    | B107    |  112 |
+| S108    | B108    |  118 |
++---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> SELECT STOCKID , MIN(QTY)FROM STOCK_HAS
+    -> GROUP BY STOCKID HAVING MIN(QTY)>
+    -> (SELECT MIN(QTY) FROM STOCK_HAS WHERE STOCKID='S108');
++---------+----------+
+| STOCKID | MIN(QTY) |
++---------+----------+
+| S101    |      125 |
+| S102    |      230 |
+| S103    |      900 |
++---------+----------+
+3 rows in set (0.03 sec)
+
+mysql> SELECT * FROM STOCK_HAS WHERE QTY=(SELECT MIN(QTY) FROM STOCK_HAS);
++---------+---------+------+
+| StockID | BloodID | Qty  |
++---------+---------+------+
+| S106    | B106    |   35 |
++---------+---------+------+
+1 row in set (0.00 sec)
+
+mysql> SELECT * FROM BLOOD;
+ERROR 1146 (42S02): Table 'blooddonation.blood' doesn't exist
+mysql> SELECT * FROM BLOOD_STORED;
++---------+-----------+-------------+------------+
+| BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+-----------+-------------+------------+
+| B101    | A+        | BB101       | 2022-01-07 |
+| B102    | B+        | BB102       | 2022-01-22 |
+| B103    | O+        | BB102       | 2022-02-22 |
+| B104    | AB+       | BB103       | 2022-01-09 |
+| B105    | A-        | BB105       | 2022-01-19 |
+| B106    | B-        | BB104       | 2022-01-29 |
+| B107    | O-        | BB103       | 2022-01-18 |
+| B108    | AB-       | BB105       | 2022-01-15 |
++---------+-----------+-------------+------------+
+8 rows in set (0.06 sec)
+
+mysql> -CORRELATED SUBQUERY
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-CORRELATED SUBQUERY' at line 1
+mysql> --CORRELATED SUBQUERY
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '--CORRELATED SUBQUERY' at line 1
+mysql> -- CORRELATED SUBQUERY;
+mysql> SELECT B.BLOODTYPE FROM BLOOD_STORED B
+    -> WHERE B.BLOODID=
+    -> (SELECT E.BLOODID
+    -> FROM STOCK_HAS E
+    -> WHERE E.BLOODID=B.BLOODID);
++-----------+
+| BLOODTYPE |
++-----------+
+| A+        |
+| B+        |
+| O+        |
+| AB+       |
+| A-        |
+| B-        |
+| O-        |
+| AB-       |
++-----------+
+8 rows in set (0.00 sec)
+
+mysql> -- NON CORRELATED;
+mysql> SELECT STOCKID FROM STOCK_HAS
+    -> WHERE QTY=
+    -> (SELECT MAX(QTY) FROM STOCK_HAS);
++---------+
+| STOCKID |
++---------+
+| S103    |
++---------+
+1 row in set (0.00 sec)
+
+mysql> SELECT STOCKID,BLOODID
+    -> FROM STOCK_HAS
+    -> WHERE QTY>
+    -> (SELECT AVERAGE(QTY
+    -> ) FROM STOCK_HAS);
+ERROR 1305 (42000): FUNCTION blooddonation.AVERAGE does not exist
+mysql> SELECT STOCKID,BLOODID
+    -> FROM STOCK_HAS
+    -> WHERE QTY=
+    -> (SELECT AVERAGE(QTY) FROM STOCK_HAS);
+ERROR 1305 (42000): FUNCTION blooddonation.AVERAGE does not exist
+mysql>
+mysql> SELECT STOCKID,BLOODID
+    -> WHERE QTY>
+    -> (SELECT MIN(QTY) FROM STOCK_HAS);
+ERROR 1054 (42S22): Unknown column 'STOCKID' in 'field list'
+mysql> SELECT STOCKID,BLOODID
+    ->
+    ->
+    -> ;;;
+ERROR 1054 (42S22): Unknown column 'STOCKID' in 'field list'
+ERROR:
+No query specified
+
+ERROR:
+No query specified
+
+mysql> SELECT STOCKID,BLOODID
+    -> FROM STOCK_HAS
+    -> WHERE QTY>
+    -> (SELECT MIN(QTY) FROM STOCK_HAS);
++---------+---------+
+| STOCKID | BLOODID |
++---------+---------+
+| S101    | B101    |
+| S102    | B102    |
+| S103    | B103    |
+| S104    | B104    |
+| S105    | B105    |
+| S107    | B107    |
+| S108    | B108    |
++---------+---------+
+7 rows in set (0.00 sec)
