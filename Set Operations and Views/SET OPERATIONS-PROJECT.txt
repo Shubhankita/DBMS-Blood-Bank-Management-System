@@ -1,0 +1,79 @@
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 15
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blooddonation;
+Database changed
+mysql> desc bloodbank;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| ORDERID     | varchar(10) | YES  | UNI | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> desc stock_has;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> desc blood;
+ERROR 1146 (42S02): Table 'blooddonation.blood' doesn't exist
+mysql> desc blood_stored;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select bloodbankid from blood_stored union select bloodbankid from bloodbank;
++-------------+
+| bloodbankid |
++-------------+
+| BB101       |
+| BB102       |
+| BB103       |
+| BB104       |
+| BB105       |
++-------------+
+5 rows in set (0.08 sec)
+
+mysql> select bloodbankid from blood_stored union all select bloodbankid from bloodbank;
++-------------+
+| bloodbankid |
++-------------+
+| BB101       |
+| BB102       |
+| BB102       |
+| BB103       |
+| BB103       |
+| BB104       |
+| BB105       |
+| BB105       |
+| BB101       |
+| BB102       |
+| BB103       |
+| BB104       |
+| BB105       |
++-------------+
+13 rows in set (0.00 sec)

@@ -1,0 +1,62 @@
+mysql> create view manage_view as
+    -> select * from manager_manages where bloodbankid='BB102';
+Query OK, 0 rows affected (0.31 sec)
+
+mysql> SELECT * FROM MANAGE_VIEW;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
++-------+------+-------------+-------------+-----------------+-------------+
+2 rows in set (0.07 sec)
+
+mysql> create view manage_view1 AS SELECT NAME, PHONE, ADDRESS FROM MANAGER_MANAGES;
+Query OK, 0 rows affected (0.23 sec)
+
+mysql> SELECT * FROM MANAGE_VIEW1;
++------+-------------+-------------+
+| NAME | PHONE       | ADDRESS     |
++------+-------------+-------------+
+| Jay  | 8989870904  | 123,Pune    |
+| Sia  | 45454570904 | 678,Chennai |
+| Aja  | 8787870904  | 890,Delhi   |
+| Max  | 7787870904  | 55,Nagpur   |
+| Tay  | 3456789098  | 145,Goa     |
+| Mia  | 456789098   | 567,Chennai |
++------+-------------+-------------+
+6 rows in set (0.02 sec)
+
+mysql> create view manage_view1 AS SELECT * FROM MANAGER_MANAGES WHERE BLOODBANKID='BB102';
+ERROR 1050 (42S01): Table 'manage_view1' already exists
+mysql> create view manage_view2 AS SELECT * FROM MANAGER_MANAGES WHERE BLOODBANKID='BB102';
+Query OK, 0 rows affected (0.13 sec)
+
+mysql> SELECT * FROM MANAGE_VIEW2;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
++-------+------+-------------+-------------+-----------------+-------------+
+2 rows in set (0.03 sec)
+
+mysql> create view manage_view3 AS SELECT * FROM MANAGER_MANAGES WHERE NAME LIKE '%a';
+Query OK, 0 rows affected (0.12 sec)
+
+mysql> SELECT * FROM MANAGE_VIEW3;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| M106  | Mia  | 456789098   | 567,Chennai | mia@gmail.com   | BB102       |
++-------+------+-------------+-------------+-----------------+-------------+
+3 rows in set (0.00 sec)
+
+mysql> drop manageview3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manageview3' at line 1
+mysql> drop manage_view3;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manage_view3' at line 1
+mysql> drop view manage_view3;
+Query OK, 0 rows affected (0.21 sec)
