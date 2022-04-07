@@ -1,0 +1,330 @@
+Microsoft Windows [Version 10.0.19042.1466]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\shubh>CD C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>MYSQL -U ROOT -P
+MYSQL: [ERROR] MYSQL: option '-P' requires an argument.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 20
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blooddonation;
+Database changed
+mysql> select * from donor;
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+| donorID | firstName | lastname | address | phone      | dob        | bloodType | quantity |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+|     101 | Alex      | Paul     | Germany | 4556789098 | 2000-03-01 | O+        |   230.12 |
+|     102 | Bell      | Decroix  | Dutch   | 3333339098 | 2003-05-06 | B+        |   111.12 |
+|     103 | Cass      | James    | US      | 6556569098 | 2001-06-11 | AB+       |   356.89 |
+|     104 | Jess      | Day      | UK      | 678977098  | 2002-08-04 | O-        |   456.77 |
+|     105 | Tom       | J        | NULL    | NULL       | NULL       | O+        |   345.78 |
+|     106 | Jerry     | k        | NULL    | NULL       | NULL       | B+        |   211.78 |
+|     107 | Terry     | P        | NULL    | NULL       | NULL       | AB+       |   211.78 |
+|     108 | Mia       | M        | US      | 56789907   | 2000-03-07 | B+        |   431.18 |
+|     109 | Anna      | May      | UK      | 223489907  | 2004-05-07 | B-        |   543.18 |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+9 rows in set (0.05 sec)
+
+mysql> delete from donor where donorid=105
+    -> ;
+Query OK, 1 row affected (0.16 sec)
+
+mysql> select * from donor;
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+| donorID | firstName | lastname | address | phone      | dob        | bloodType | quantity |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+|     101 | Alex      | Paul     | Germany | 4556789098 | 2000-03-01 | O+        |   230.12 |
+|     102 | Bell      | Decroix  | Dutch   | 3333339098 | 2003-05-06 | B+        |   111.12 |
+|     103 | Cass      | James    | US      | 6556569098 | 2001-06-11 | AB+       |   356.89 |
+|     104 | Jess      | Day      | UK      | 678977098  | 2002-08-04 | O-        |   456.77 |
+|     106 | Jerry     | k        | NULL    | NULL       | NULL       | B+        |   211.78 |
+|     107 | Terry     | P        | NULL    | NULL       | NULL       | AB+       |   211.78 |
+|     108 | Mia       | M        | US      | 56789907   | 2000-03-07 | B+        |   431.18 |
+|     109 | Anna      | May      | UK      | 223489907  | 2004-05-07 | B-        |   543.18 |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select * from medicalpersonnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | Paul     | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Tom       | J        | Germany   | xyz@gmail.com | NULL       | NULL       |
++-----------+----------+-----------+---------------+------------+------------+
+2 rows in set (0.03 sec)
+
+mysql> delete from medicalpersonnel where phone is null;
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from medicalpersonnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | Paul     | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
++-----------+----------+-----------+---------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from donor;
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+| donorID | firstName | lastname | address | phone      | dob        | bloodType | quantity |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+|     101 | Alex      | Paul     | Germany | 4556789098 | 2000-03-01 | O+        |   230.12 |
+|     102 | Bell      | Decroix  | Dutch   | 3333339098 | 2003-05-06 | B+        |   111.12 |
+|     103 | Cass      | James    | US      | 6556569098 | 2001-06-11 | AB+       |   356.89 |
+|     104 | Jess      | Day      | UK      | 678977098  | 2002-08-04 | O-        |   456.77 |
+|     106 | Jerry     | k        | NULL    | NULL       | NULL       | B+        |   211.78 |
+|     107 | Terry     | P        | NULL    | NULL       | NULL       | AB+       |   211.78 |
+|     108 | Mia       | M        | US      | 56789907   | 2000-03-07 | B+        |   431.18 |
+|     109 | Anna      | May      | UK      | 223489907  | 2004-05-07 | B-        |   543.18 |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+8 rows in set (0.00 sec)
+
+mysql> select firstName,bloodType from donor;
++-----------+-----------+
+| firstName | bloodType |
++-----------+-----------+
+| Alex      | O+        |
+| Bell      | B+        |
+| Cass      | AB+       |
+| Jess      | O-        |
+| Jerry     | B+        |
+| Terry     | AB+       |
+| Mia       | B+        |
+| Anna      | B-        |
++-----------+-----------+
+8 rows in set (0.00 sec)
+
+mysql> select firstName from donor where donorID=108
+    -> ;
++-----------+
+| firstName |
++-----------+
+| Mia       |
++-----------+
+1 row in set (0.02 sec)
+
+mysql> create table personnel as select
+    -> * from medicalpersonnel;
+Query OK, 1 row affected (2.56 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> select * from personnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | Paul     | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
++-----------+----------+-----------+---------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> select firstName as Name, phone as Mobile from MedicalPersonnel;
++------+------------+
+| Name | Mobile     |
++------+------------+
+| Alex | 4556789098 |
++------+------------+
+1 row in set (0.00 sec)
+
+mysql> select * from donor;
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+| donorID | firstName | lastname | address | phone      | dob        | bloodType | quantity |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+|     101 | Alex      | Paul     | Germany | 4556789098 | 2000-03-01 | O+        |   230.12 |
+|     102 | Bell      | Decroix  | Dutch   | 3333339098 | 2003-05-06 | B+        |   111.12 |
+|     103 | Cass      | James    | US      | 6556569098 | 2001-06-11 | AB+       |   356.89 |
+|     104 | Jess      | Day      | UK      | 678977098  | 2002-08-04 | O-        |   456.77 |
+|     106 | Jerry     | k        | NULL    | NULL       | NULL       | B+        |   211.78 |
+|     107 | Terry     | P        | NULL    | NULL       | NULL       | AB+       |   211.78 |
+|     108 | Mia       | M        | US      | 56789907   | 2000-03-07 | B+        |   431.18 |
+|     109 | Anna      | May      | UK      | 223489907  | 2004-05-07 | B-        |   543.18 |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+8 rows in set (0.02 sec)
+
+mysql> update table donor set address='Finland' where donorID=106;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'table donor set address='Finland' where donorID=106' at line 1
+mysql> update donor set address='Finland' where donorID=106;
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> select * from donor;
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+| donorID | firstName | lastname | address | phone      | dob        | bloodType | quantity |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+|     101 | Alex      | Paul     | Germany | 4556789098 | 2000-03-01 | O+        |   230.12 |
+|     102 | Bell      | Decroix  | Dutch   | 3333339098 | 2003-05-06 | B+        |   111.12 |
+|     103 | Cass      | James    | US      | 6556569098 | 2001-06-11 | AB+       |   356.89 |
+|     104 | Jess      | Day      | UK      | 678977098  | 2002-08-04 | O-        |   456.77 |
+|     106 | Jerry     | k        | Finland | NULL       | NULL       | B+        |   211.78 |
+|     107 | Terry     | P        | NULL    | NULL       | NULL       | AB+       |   211.78 |
+|     108 | Mia       | M        | US      | 56789907   | 2000-03-07 | B+        |   431.18 |
+|     109 | Anna      | May      | UK      | 223489907  | 2004-05-07 | B-        |   543.18 |
++---------+-----------+----------+---------+------------+------------+-----------+----------+
+8 rows in set (0.00 sec)
+
+mysql> COMMIT;
+Query OK, 0 rows affected (0.03 sec)
+
+mysql> DELETE * FROM PERSONNEL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '* FROM PERSONNEL' at line 1
+mysql> DELETE FROM PERSONNEL;
+Query OK, 1 row affected (0.46 sec)
+
+mysql> SELECT * FROM PERSONNEL;
+Empty set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM PERSONNEL;
+Empty set (0.00 sec)
+
+mysql> ROLLBACK;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> DESC PERSONNEL;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstName | varchar(50)  | YES  |     | NULL    |       |
+| lastname  | varchar(50)  | YES  |     | NULL    |       |
+| address   | varchar(60)  | YES  |     | NULL    |       |
+| email     | varchar(100) | YES  |     | NULL    |       |
+| phone     | varchar(20)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.41 sec)
+
+mysql> DROP PERSONNEL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PERSONNEL' at line 1
+mysql> DROP TABLE  PERSONNEL;
+Query OK, 0 rows affected (1.80 sec)
+
+mysql> create table personnel as select
+    ->     -> * from medicalpersonnel;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '-> * from medicalpersonnel' at line 2
+mysql> create table personnel as select
+    -> * from medicalpersonnel;
+Query OK, 1 row affected (1.40 sec)
+Records: 1  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM PERSONNEL;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | Paul     | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
++-----------+----------+-----------+---------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> UPDATE PERSONNEL SET LASTNAME='LAX' WHERE firstName='Alex';
+Query OK, 1 row affected (0.08 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM PERSONNEL;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
++-----------+----------+-----------+---------------+------------+------------+
+1 row in set (0.04 sec)
+
+mysql> rollback;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> SELECT * FROM PERSONNEL;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
++-----------+----------+-----------+---------------+------------+------------+
+1 row in set (0.00 sec)
+
+mysql> Insert into personnel values('Sia','l','UK','SIA@gmail.com',34567890,'2001-07-01');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> savepoint update_over;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Insert into personnel values('Kia','K','USA','KIA@gmail.com',111227890,'2002-07-02');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> SELECT * FROM PERSONNEL;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Sia       | l        | UK        | SIA@gmail.com | 34567890   | 2001-07-01 |
+| Kia       | K        | USA       | KIA@gmail.com | 111227890  | 2002-07-02 |
++-----------+----------+-----------+---------------+------------+------------+
+3 rows in set (0.00 sec)
+
+mysql> ROLLBACK TO UPDATE_OVER;
+ERROR 1305 (42000): SAVEPOINT UPDATE_OVER does not exist
+mysql> rollback to update_over;
+ERROR 1305 (42000): SAVEPOINT update_over does not exist
+mysql> savepoint s1;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Insert into personnel values('Mia','M','US','MIA@gmail.com',111227890,'2002-07-02');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from personnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Sia       | l        | UK        | SIA@gmail.com | 34567890   | 2001-07-01 |
+| Kia       | K        | USA       | KIA@gmail.com | 111227890  | 2002-07-02 |
+| Mia       | M        | US        | MIA@gmail.com | 111227890  | 2002-07-02 |
++-----------+----------+-----------+---------------+------------+------------+
+4 rows in set (0.04 sec)
+
+mysql> rollback to s1;
+ERROR 1305 (42000): SAVEPOINT s1 does not exist
+mysql> START TRANSACTION;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> select * from personnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Sia       | l        | UK        | SIA@gmail.com | 34567890   | 2001-07-01 |
+| Kia       | K        | USA       | KIA@gmail.com | 111227890  | 2002-07-02 |
+| Mia       | M        | US        | MIA@gmail.com | 111227890  | 2002-07-02 |
++-----------+----------+-----------+---------------+------------+------------+
+4 rows in set (0.00 sec)
+
+mysql> savepoint a;
+Query OK, 0 rows affected (0.00 sec)
+
+mysql> Update Personnel set address='UK' where firstName='Mia';
+Query OK, 1 row affected (0.02 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> rollback to savepoint a;
+Query OK, 0 rows affected (0.02 sec)
+
+mysql> select * from personnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Sia       | l        | UK        | SIA@gmail.com | 34567890   | 2001-07-01 |
+| Kia       | K        | USA       | KIA@gmail.com | 111227890  | 2002-07-02 |
+| Mia       | M        | US        | MIA@gmail.com | 111227890  | 2002-07-02 |
++-----------+----------+-----------+---------------+------------+------------+
+4 rows in set (0.04 sec)
+
+mysql>
