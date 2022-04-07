@@ -1,0 +1,674 @@
+
+SQL*Plus: Release 11.2.0.4.0 Production on Fri Mar 11 12:05:20 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911033010035/RA1911033010035@3.232.175.251:1521/ORCL
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> set serveroutput on;
+SQL> CREATE OR REPLACE PROCEDURE greetings
+  2  AS
+  3  BEGIN
+  4     dbms_output.put_line('Hello World!');
+  5  END;
+  6  /
+
+Procedure created.
+
+SQL> execute greetings;
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> drop greetings;
+drop greetings
+     *
+ERROR at line 1:
+ORA-00950: invalid DROP option
+
+
+SQL> drop procedure greetings;
+
+Procedure dropped.
+
+SQL> DECLARE
+  2     type namesarray IS VARRAY(5) OF VARCHAR2(10);
+  3     type grades IS VARRAY(5) OF INTEGER;
+  4     names namesarray;
+  5     marks grades;
+  6     total integer;
+  7  BEGIN
+  8     names := namesarray('Kavita', 'Pritam', 'Ayan', 'Rishav', 'Aziz');
+  9     marks:= grades(98, 97, 78, 87, 92);
+ 10     total := names.count;
+ 11     dbms_output.put_line('Total '|| total || ' Students');
+ 12     FOR i in 1 .. total LOOP
+ 13        dbms_output.put_line('Student: ' || names(i) || '
+ 14        Marks: ' || marks(i));
+ 15     END LOOP;
+ 16  END;
+ 17  /
+Total 5 Students
+Student: Kavita
+      Marks: 98
+Student: Pritam
+      Marks: 97
+Student: Ayan
+      Marks: 78
+Student: Rishav
+      Marks: 87
+Student: Aziz
+      Marks: 92
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL> DECLARE
+  2     a number;
+  3     b number;
+  4     c number;
+  5  PROCEDURE findMin(x IN number, y IN number, z OUT number) IS
+  6  BEGIN
+  7     IF x < y THEN
+  8        z:= x;
+  9     ELSE
+ 10        z:= y;
+ 11     END IF;
+ 12  END;
+ 13  BEGIN
+ 14     a:= 23;
+ 15     b:= 45;
+ 16     findMin(a, b, c);
+ 17     dbms_output.put_line(' Minimum of (23, 45) : ' || c);
+ 18  END;
+ 19  /
+Minimum of (23, 45) : 23
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     a number;
+  3  PROCEDURE squareNum(x IN OUT number) IS
+  4  BEGIN
+  5    x := x * x;
+  6  END;
+  7  BEGIN
+  8     a:= 23;
+  9     squareNum(a);
+ 10     dbms_output.put_line(' Square of (23): ' || a);
+ 11  END;
+ 12  /
+Square of (23): 529
+
+PL/SQL procedure successfully completed.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM customers;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM employees;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM epmloyee;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL>
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM epmloyee;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM epmloyee;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> CREATE OR REPLACE FUNCTION totalCustomers
+  2  RETURN number IS
+  3     total number(2) := 0;
+  4  BEGIN
+  5     SELECT count(*) into total
+  6     FROM epmloyee;
+  7
+  8     RETURN total;
+  9  END;
+ 10  /
+
+Warning: Function created with compilation errors.
+
+SQL> show tables;
+SP2-0158: unknown SHOW option "tables"
+SQL> desc employee;
+ERROR:
+ORA-04043: object employee does not exist
+
+
+SQL> select * from employee1;
+select * from employee1
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> select * from emp;
+select * from emp
+              *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> SELECT owner, table_name FROM all_tables;
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+DUAL
+
+SYS
+SYSTEM_PRIVILEGE_MAP
+
+SYS
+TABLE_PRIVILEGE_MAP
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+USER_PRIVILEGE_MAP
+
+SYS
+STMT_AUDIT_OPTION_MAP
+
+SYS
+AV_DUAL
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+WRR$_REPLAY_CALL_FILTER
+
+SYS
+SCHEDULER_FILEWATCHER_QT
+
+SYS
+HS_BULKLOAD_VIEW_OBJ
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+HS$_PARALLEL_METADATA
+
+SYS
+HS_PARTITION_COL_NAME
+
+SYS
+HS_PARTITION_COL_TYPE
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+XDB
+XDB$IMPORT_TT_INFO
+
+XDB
+XDB$IMPORT_QN_INFO
+
+XDB
+XDB$IMPORT_NM_INFO
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+XDB
+XDB$IMPORT_PT_INFO
+
+XDB
+XDB_INDEX_DDL_CACHE
+
+CTXSYS
+DR$OBJECT_ATTRIBUTE
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+CTXSYS
+DR$POLICY_TAB
+
+CTXSYS
+DR$THS
+
+CTXSYS
+DR$THS_PHRASE
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+CTXSYS
+DR$NUMBER_SEQUENCE
+
+SYS
+PLSQL_TRACE_RUNS
+
+SYS
+PLSQL_TRACE_EVENTS
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+ALL_UNIFIED_AUDIT_ACTIONS
+
+SYS
+AUDIT_ACTIONS
+
+SYS
+FINALHIST$
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+MODELGTTRAW$
+
+SYS
+WRI$_ADV_ASA_RECO_DATA
+
+SYS
+PLAN_TABLE$
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYSTEM
+OL$
+
+SYSTEM
+OL$HINTS
+
+SYSTEM
+OL$NODES
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+KU$_LIST_FILTER_TEMP_2
+
+SYS
+KU$_LIST_FILTER_TEMP
+
+SYS
+DATA_PUMP_XPL_TABLE$
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+KU$NOEXP_TAB
+
+SYS
+KU$_SHARD_DOMIDX_NAMEMAP
+
+SYS
+KU$XKTFBUE
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+ODCI_SECOBJ$
+
+SYS
+ODCI_WARNINGS$
+
+SYS
+ODCI_PMO_ROWIDS$
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+XS$VALIDATION_TABLE
+
+SYS
+IMPDP_STATS
+
+SYS
+KU$_DATAPUMP_MASTER_12_2
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+KU$_DATAPUMP_MASTER_12_0
+
+SYS
+KU$_DATAPUMP_MASTER_11_2
+
+SYS
+KU$_DATAPUMP_MASTER_11_1_0_7
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+SYS
+KU$_DATAPUMP_MASTER_11_1
+
+SYS
+KU$_DATAPUMP_MASTER_10_1
+
+SYS
+SPD_SCRATCH_TAB
+
+
+OWNER
+--------------------------------------------------------------------------------
+TABLE_NAME
+--------------------------------------------------------------------------------
+XDB
+XDB$XIDX_IMP_T
+
+SYS
+WRI$_HEATMAP_TOPN_DEP1
+
+SYS
+WRI$_HEATMAP_TOPN_DEP2
+
+
+54 rows selected.
+
+SQL> SELECT table_name FROM user_tables;
+
+no rows selected
+
+SQL> FUNCTION fact(x number)
+SP2-0734: unknown command beginning "FUNCTION f..." - rest of line ignored.
+SQL> RETURN number
+SP2-0734: unknown command beginning "RETURN num..." - rest of line ignored.
+SQL> IS
+SP2-0042: unknown command "IS" - rest of line ignored.
+SQL>    f number;
+SP2-0042: unknown command "f number" - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> BEGIN
+  2     IF x=0 THEN
+  3        f := 1;
+  4     ELSE
+  5        f := x * fact(x-1);
+  6     END IF;
+  7  RETURN f;
+  8  END;
+  9
+ 10  BEGIN
+ 11     num:= 6;
+ 12     factorial := fact(num);
+ 13     dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);
+ 14  END;
+ 15  /
+BEGIN
+*
+ERROR at line 10:
+ORA-06550: line 10, column 1:
+PLS-00103: Encountered the symbol "BEGIN"
+
+
+SQL>
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> FUNCTION fact(x number)
+SP2-0734: unknown command beginning "FUNCTION f..." - rest of line ignored.
+SQL> RETURN number
+SP2-0734: unknown command beginning "RETURN num..." - rest of line ignored.
+SQL> IS
+SP2-0042: unknown command "IS" - rest of line ignored.
+SQL>    f number;
+SP2-0042: unknown command "f number" - rest of line ignored.
+SP2-0044: For a list of known commands enter HELP
+and to leave enter EXIT.
+SQL> BEGIN
+  2     IF x=0 THEN
+  3        f := 1;
+  4     ELSE
+  5        f := x * fact(x-1);
+  6     END IF;
+  7  RETURN f;
+  8  END;
+  9
+ 10  BEGIN
+ 11     num:= 6;
+ 12     factorial := fact(num);
+ 13     dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);
+ 14  END;
+ 15  /
+BEGIN
+*
+ERROR at line 10:
+ORA-06550: line 10, column 1:
+PLS-00103: Encountered the symbol "BEGIN"
+
+
+SQL>
+SQL>
+SQL> DECLARE
+  2     num number;
+  3     factorial number;
+  4
+  5  FUNCTION fact(x number)
+  6  RETURN number
+  7  IS
+  8     f number;
+  9  BEGIN
+ 10     IF x=0 THEN
+ 11        f := 1;
+ 12     ELSE
+ 13        f := x * fact(x-1);
+ 14     END IF;
+ 15  RETURN f;
+ 16  END;
+ 17
+ 18  BEGIN
+ 19     num:= 6;
+ 20     factorial := fact(num);
+ 21     dbms_output.put_line(' Factorial '|| num || ' is ' || factorial);
+ 22  END;
+ 23  /
+Factorial 6 is 720
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     total_rows number(2);
+  3  BEGIN
+  4     UPDATE customers
+  5     SET salary = salary + 500;
+  6     IF sql%notfound THEN
+  7        dbms_output.put_line('no customers selected');
+  8     ELSIF sql%found THEN
+  9        total_rows := sql%rowcount;
+ 10        dbms_output.put_line( total_rows || ' customers selected ');
+ 11     END IF;
+ 12  END;
+ 13  /
+   UPDATE customers
+          *
+ERROR at line 4:
+ORA-06550: line 4, column 11:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 4, column 4:
+PL/SQL: SQL Statement ignored
+
+
+SQL> DECLARE
+  2     total_rows number(2);
+  3  BEGIN
+  4     UPDATE customers SET salary = salary + 500;
+  5     IF sql%notfound THEN
+  6        dbms_output.put_line('no customers selected');
+  7     ELSIF sql%found THEN
+  8        total_rows := sql%rowcount;
+  9        dbms_output.put_line( total_rows || ' customers selected ');
+ 10     END IF;
+ 11  END;
+ 12  /
+   UPDATE customers SET salary = salary + 500;
+          *
+ERROR at line 4:
+ORA-06550: line 4, column 11:
+PL/SQL: ORA-00942: table or view does not exist
+ORA-06550: line 4, column 4:
+PL/SQL: SQL Statement ignored
+
+
+SQL> create table customers( empid varchar(10), name varchar(10), salary number);
+
+Table created.
+
+SQL> insert into customer('101','mia',12000);
+insert into customer('101','mia',12000)
+                     *
+ERROR at line 1:
+ORA-00928: missing SELECT keyword
+
+
+SQL>
+SQL>
+SQL> insert into customer values('101','mia',12000);
+insert into customer values('101','mia',12000)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL>
+SQL>
+SQL> insert into customer values('101','mia',12000);
+insert into customer values('101','mia',12000)
+            *
+ERROR at line 1:
+ORA-00942: table or view does not exist
+
+
+SQL> create table customers( empid varchar(10), name varchar(10), salary number);
+create table customers( empid varchar(10), name varchar(10), salary number)
+             *
+ERROR at line 1:
+ORA-00955: name is already used by an existing object
+
+
+SQL> insert into customers values('101','mia',12000);
+
+1 row created.
+
+SQL> insert into customers values('102','kia',12000);
+
+1 row created.
+
+SQL> insert into customers values('102','sia',13000);
+
+1 row created.
+
+SQL> DECLARE
+  2     total_rows number(2);
+  3  BEGIN
+  4     UPDATE customers
+  5     SET salary = salary + 500;
+  6     IF sql%notfound THEN
+  7        dbms_output.put_line('no customers selected');
+  8     ELSIF sql%found THEN
+  9        total_rows := sql%rowcount;
+ 10        dbms_output.put_line( total_rows || ' customers selected ');
+ 11     END IF;
+ 12  END;
+ 13  /
+3 customers selected
+
+PL/SQL procedure successfully completed.
+
+SQL>
