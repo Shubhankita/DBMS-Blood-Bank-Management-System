@@ -1,0 +1,366 @@
+Microsoft Windows [Version 10.0.19044.1526]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\shubh>cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql root -p
+Enter password: ********
+ERROR 1045 (28000): Access denied for user 'ODBC'@'localhost' (using password: YES)
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql root -p
+Enter password: ********
+ERROR 1045 (28000): Access denied for user 'ODBC'@'localhost' (using password: YES)
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql root -u
+mysql: [ERROR] mysql: option '-u' requires an argument.
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql root -p
+Enter password: ********
+ERROR 1045 (28000): Access denied for user 'ODBC'@'localhost' (using password: YES)
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 11
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> show tables;
+ERROR 1046 (3D000): No database selected
+mysql> use blooddonation;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.48 sec)
+
+mysql> desc blood;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.11 sec)
+
+mysql> Insert Into Blood values('B101','A+','BB101','01/01/2022');
+ERROR 1292 (22007): Incorrect date value: '01/01/2022' for column 'DateOfReg' at row 1
+mysql> Insert Into Blood values('B101','A+','BB101','01-01-2022');
+ERROR 1292 (22007): Incorrect date value: '01-01-2022' for column 'DateOfReg' at row 1
+mysql>
+mysql> Insert Into Blood values('B101','A+','BB101','2022-01-07');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`blooddonation`.`blood`, CONSTRAINT `BloodBank_fk` FOREIGN KEY (`BloodBankID`) REFERENCES `bloodbank` (`BloodBankID`))
+mysql> DESC BLOODBANK;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| ORDERID     | varchar(10) | YES  | UNI | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> Insert Into BloodBank values('BB101','O101','A+ x 2','Rotary');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> Insert Into BloodBank values('BB102','O102','B+ x 3','Red Cross');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> Insert Into BloodBank values('BB103','O103','AB+ x 5','Sankalp India');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> Insert Into BloodBank values('BB104','O104','AB- x 1','Athar Blood');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> Insert Into BloodBank values('BB105','O105','O- x 7','National Blood Society');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> Select * from blood;
+Empty set (0.03 sec)
+
+mysql> Select * from bloodbank;
++-------------+---------+-----------+------------------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   |
++-------------+---------+-----------+------------------------+
+| BB101       | O101    | A+ x 2    | Rotary                 |
+| BB102       | O102    | B+ x 3    | Red Cross              |
+| BB103       | O103    | AB+ x 5   | Sankalp India          |
+| BB104       | O104    | AB- x 1   | Athar Blood            |
+| BB105       | O105    | O- x 7    | National Blood Society |
++-------------+---------+-----------+------------------------+
+5 rows in set (0.05 sec)
+
+mysql> desc blood;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.16 sec)
+
+mysql> Insert Into Blood values('B101','A+','BB101','2022-01-07');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> Insert Into Blood values('B102','B+','BB102','2022-01-22');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> Insert Into Blood values('B103','O+','BB102','2022-02-22');
+Query OK, 1 row affected (0.27 sec)
+
+mysql> Insert Into Blood values('B104','AB+','BB103','2022-01-09');
+Query OK, 1 row affected (0.39 sec)
+
+mysql> Insert Into Blood values('B105','A-','BB105','2022-01-19');
+Query OK, 1 row affected (0.42 sec)
+
+mysql> Insert Into Blood values('B105','B-','BB104','2022-01-29');
+ERROR 1062 (23000): Duplicate entry 'B105' for key 'blood.PRIMARY'
+mysql> Insert Into Blood values('B106','B-','BB104','2022-01-29');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> Insert Into Blood values('B107','O-','BB103','2022-01-18');
+Query OK, 1 row affected (0.08 sec)
+
+mysql> Insert Into Blood values('B108','AB-','BB105','2022-01-15');
+Query OK, 1 row affected (0.28 sec)
+
+mysql> Select * from blood;
++---------+-----------+-------------+------------+
+| BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+-----------+-------------+------------+
+| B101    | A+        | BB101       | 2022-01-07 |
+| B102    | B+        | BB102       | 2022-01-22 |
+| B103    | O+        | BB102       | 2022-02-22 |
+| B104    | AB+       | BB103       | 2022-01-09 |
+| B105    | A-        | BB105       | 2022-01-19 |
+| B106    | B-        | BB104       | 2022-01-29 |
+| B107    | O-        | BB103       | 2022-01-18 |
+| B108    | AB-       | BB105       | 2022-01-15 |
++---------+-----------+-------------+------------+
+8 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.16 sec)
+
+mysql> desc hospital;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| HospitalID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID    | varchar(30) | NO   |     | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| Phone      | varchar(30) | YES  |     | NULL    |       |
+| Address    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.09 sec)
+
+mysql> select * from bloodbank;
++-------------+---------+-----------+------------------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   |
++-------------+---------+-----------+------------------------+
+| BB101       | O101    | A+ x 2    | Rotary                 |
+| BB102       | O102    | B+ x 3    | Red Cross              |
+| BB103       | O103    | AB+ x 5   | Sankalp India          |
+| BB104       | O104    | AB- x 1   | Athar Blood            |
+| BB105       | O105    | O- x 7    | National Blood Society |
++-------------+---------+-----------+------------------------+
+5 rows in set (0.00 sec)
+
+mysql> Insert Into Hospital values('H101','O101','Ruby Hall','3467876543','Pune');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> Insert Into Hospital values('H102','O102','Apollo','6678776543','Mumbai');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> Insert Into Hospital values('H103','O103','Columbia Asia','6758986543','Chennai');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> Insert Into Hospital values('H104','O104','Nobel Hospital','9898986543','Pune');
+Query OK, 1 row affected (0.18 sec)
+
+mysql> Insert Into Hospital values('H105','O105','Care Hospital','9076786543','Delhi');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> select * from hospital;
++------------+---------+----------------+------------+---------+
+| HospitalID | OrderID | Name           | Phone      | Address |
++------------+---------+----------------+------------+---------+
+| H101       | O101    | Ruby Hall      | 3467876543 | Pune    |
+| H102       | O102    | Apollo         | 6678776543 | Mumbai  |
+| H103       | O103    | Columbia Asia  | 6758986543 | Chennai |
+| H104       | O104    | Nobel Hospital | 9898986543 | Pune    |
+| H105       | O105    | Care Hospital  | 9076786543 | Delhi   |
++------------+---------+----------------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> desc stock;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.09 sec)
+
+mysql> select * from blood;
++---------+-----------+-------------+------------+
+| BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+-----------+-------------+------------+
+| B101    | A+        | BB101       | 2022-01-07 |
+| B102    | B+        | BB102       | 2022-01-22 |
+| B103    | O+        | BB102       | 2022-02-22 |
+| B104    | AB+       | BB103       | 2022-01-09 |
+| B105    | A-        | BB105       | 2022-01-19 |
+| B106    | B-        | BB104       | 2022-01-29 |
+| B107    | O-        | BB103       | 2022-01-18 |
+| B108    | AB-       | BB105       | 2022-01-15 |
++---------+-----------+-------------+------------+
+8 rows in set (0.04 sec)
+
+mysql> Insert into stock values('S101','B101',115);
+Query OK, 1 row affected (0.09 sec)
+
+mysql> Insert into stock values('S102','B102',220);
+Query OK, 1 row affected (0.19 sec)
+
+mysql> Insert into stock values('S103','B103',890);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> Insert into stock values('S104','B104',90);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> Insert into stock values('S105','B105',45);
+Query OK, 1 row affected (0.27 sec)
+
+mysql> Insert into stock values('S106','B106',25);
+Query OK, 1 row affected (0.20 sec)
+
+mysql> Insert into stock values('S107','B107',102);
+Query OK, 1 row affected (0.12 sec)
+
+mysql> Insert into stock values('S108','B108',108);
+Query OK, 1 row affected (0.15 sec)
+
+mysql> SELECT * FROM STOCK;
++---------+---------+------+
+| StockID | BloodID | Qty  |
++---------+---------+------+
+| S101    | B101    |  115 |
+| S102    | B102    |  220 |
+| S103    | B103    |  890 |
+| S104    | B104    |   90 |
+| S105    | B105    |   45 |
+| S106    | B106    |   25 |
+| S107    | B107    |  102 |
+| S108    | B108    |  108 |
++---------+---------+------+
+8 rows in set (0.00 sec)
+
+mysql> SHOW TABLES;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.03 sec)
+
+mysql> DESC MANAGER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.12 sec)
+
+mysql> iNSERT INTO MANAGER values('M101','Jay','8989870904','123,Pune','jay@gmail.com');
+ERROR 3819 (HY000): Check constraint 'emp_ck' is violated.
+mysql> alter table manager drop constraint emp_ck;
+Query OK, 0 rows affected (1.76 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> iNSERT INTO MANAGER values('M101','Jay','8989870904','123,Pune','jay@gmail.com');
+Query OK, 1 row affected (0.05 sec)
+
+mysql> iNSERT INTO MANAGER values('M102','Sia','45454570904','678,Chennai','sia@gmail.com');
+Query OK, 1 row affected (0.23 sec)
+
+mysql> iNSERT INTO MANAGER values('M103','Aja','8787870904','890,Delhi','aja@gmail.com');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> iNSERT INTO MANAGER values('M104','Max','7787870904','55,Mumbai','max@gmail.com');
+Query OK, 1 row affected (0.17 sec)
+
+mysql> select * from manager;
++-------+------+-------------+-------------+---------------+
+| EmpID | Name | Phone       | Address     | email         |
++-------+------+-------------+-------------+---------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia@gmail.com |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com |
+| M104  | Max  | 7787870904  | 55,Mumbai   | max@gmail.com |
++-------+------+-------------+-------------+---------------+
+4 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.09 sec)
+
+mysql>

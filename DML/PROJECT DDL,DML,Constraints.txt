@@ -1,0 +1,834 @@
+Microsoft Windows [Version 10.0.19044.1586]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\shubh>cd C:\Program Files\MySQL\MySQL Server 8.0\bin
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blodddonation;
+ERROR 1049 (42000): Unknown database 'blodddonation'
+mysql> use blooddonation;
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| customers               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+9 rows in set (0.37 sec)
+
+mysql> desc blood;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.21 sec)
+
+mysql> ALTER TABLE Blood RENAME TO Blood_Stored;
+Query OK, 0 rows affected (2.30 sec)
+
+mysql> desc blood_stored;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> desc blood_stored;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> select * from blood_stored;
++---------+-----------+-------------+------------+
+| BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+-----------+-------------+------------+
+| B101    | A+        | BB101       | 2022-01-07 |
+| B102    | B+        | BB102       | 2022-01-22 |
+| B103    | O+        | BB102       | 2022-02-22 |
+| B104    | AB+       | BB103       | 2022-01-09 |
+| B105    | A-        | BB105       | 2022-01-19 |
+| B106    | B-        | BB104       | 2022-01-29 |
+| B107    | O-        | BB103       | 2022-01-18 |
+| B108    | AB-       | BB105       | 2022-01-15 |
++---------+-----------+-------------+------------+
+8 rows in set (0.16 sec)
+
+mysql> desc stock;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> select * from stock;
++---------+---------+------+
+| StockID | BloodID | Qty  |
++---------+---------+------+
+| S101    | B101    |  125 |
+| S102    | B102    |  230 |
+| S103    | B103    |  900 |
+| S104    | B104    |  100 |
+| S105    | B105    |   55 |
+| S106    | B106    |   35 |
+| S107    | B107    |  112 |
+| S108    | B108    |  118 |
++---------+---------+------+
+8 rows in set (0.03 sec)
+
+mysql> ALTER TABLE Stock RENAME TO Stock_has;
+Query OK, 0 rows affected (0.66 sec)
+
+mysql> desc stock_has;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.28 sec)
+
+mysql> select * from stock_has;
++---------+---------+------+
+| StockID | BloodID | Qty  |
++---------+---------+------+
+| S101    | B101    |  125 |
+| S102    | B102    |  230 |
+| S103    | B103    |  900 |
+| S104    | B104    |  100 |
+| S105    | B105    |   55 |
+| S106    | B106    |   35 |
+| S107    | B107    |  112 |
+| S108    | B108    |  118 |
++---------+---------+------+
+8 rows in set (0.03 sec)
+
+mysql> desc donor;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| DOB     | date        | YES  |     | NULL    |       |
+| Gender  | varchar(10) | YES  |     | NULL    |       |
+| DonorID | varchar(10) | NO   | PRI | NULL    |       |
+| BloodID | varchar(10) | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+7 rows in set (0.00 sec)
+
+mysql> desc labtech;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> alter table donor add EmpID varchar(10);
+Query OK, 0 rows affected (1.44 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc donor;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| DOB     | date        | YES  |     | NULL    |       |
+| Gender  | varchar(10) | YES  |     | NULL    |       |
+| DonorID | varchar(10) | NO   | PRI | NULL    |       |
+| BloodID | varchar(10) | YES  | MUL | NULL    |       |
+| EmpID   | varchar(10) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.19 sec)
+
+mysql> alter table donor add foreign key(EmpID) REFERENCES LABTECH(EmpID);
+Query OK, 10 rows affected (3.21 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> desc donor;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| DOB     | date        | YES  |     | NULL    |       |
+| Gender  | varchar(10) | YES  |     | NULL    |       |
+| DonorID | varchar(10) | NO   | PRI | NULL    |       |
+| BloodID | varchar(10) | YES  | MUL | NULL    |       |
+| EmpID   | varchar(10) | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.00 sec)
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | NULL  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | NULL  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | NULL  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | NULL  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | NULL  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | NULL  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | NULL  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | NULL  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | NULL  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | NULL  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> select * from labtech;
++-------+----------+-------------+------------+
+| EmpID | Name     | Address     | Phone      |
++-------+----------+-------------+------------+
+| L101  | Ram K    | 111, Pune   | 1213244567 |
+| L102  | Diya     | 143,Chennai | 8888970878 |
+| L103  | Inaya I  | 143,Chennai | 7686887899 |
+| L104  | Amar M   | 789,Delhi   | 7897997099 |
+| L105  | Aarav JN | 890,Nagpur  | 4675786899 |
++-------+----------+-------------+------------+
+5 rows in set (0.18 sec)
+
+mysql> insert into labtech values ('L106','Keshav','234,Goa','4567890987');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> select * from labtech;
++-------+----------+-------------+------------+
+| EmpID | Name     | Address     | Phone      |
++-------+----------+-------------+------------+
+| L101  | Ram K    | 111, Pune   | 1213244567 |
+| L102  | Diya     | 143,Chennai | 8888970878 |
+| L103  | Inaya I  | 143,Chennai | 7686887899 |
+| L104  | Amar M   | 789,Delhi   | 7897997099 |
+| L105  | Aarav JN | 890,Nagpur  | 4675786899 |
+| L106  | Keshav   | 234,Goa     | 4567890987 |
++-------+----------+-------------+------------+
+6 rows in set (0.00 sec)
+
+mysql> update donor set EMPID='L101' where address LIKE '%Pune%';
+Query OK, 2 rows affected (0.13 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | L101  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | NULL  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | NULL  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | NULL  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | NULL  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | NULL  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | NULL  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | NULL  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | L101  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | NULL  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> update donor set EMPID='L105' where address LIKE '%Nagpur%';
+Query OK, 2 rows affected (0.23 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | L101  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | L105  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | NULL  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | NULL  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | NULL  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | NULL  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | NULL  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | NULL  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | L101  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | L105  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> update donor set EMPID='L102' where address LIKE '%Chennai%';
+Query OK, 2 rows affected (0.12 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | L101  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | L105  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | L102  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | L102  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | NULL  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | NULL  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | NULL  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | NULL  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | L101  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | L105  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> update donor set EMPID='L106' where address LIKE '%Goa%';
+Query OK, 2 rows affected (0.17 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | L101  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | L105  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | L102  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | L102  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | L106  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | NULL  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | L106  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | NULL  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | L101  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | L105  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.00 sec)
+
+mysql> update donor set EMPID='L104' where address LIKE '%Delhi%';
+Query OK, 2 rows affected (0.16 sec)
+Rows matched: 2  Changed: 2  Warnings: 0
+
+mysql> select * from donor;
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Name        | Phone      | Address     | DOB        | Gender | DonorID | BloodID | EmpID |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+| Ajay Kumar  | 2345678909 | 546,Pune    | 2001-01-01 | Male   | D101    | B101    | L101  |
+| Vijay Kumar | 5656678909 | 226,Nagpur  | 1998-08-09 | Male   | D102    | B101    | L105  |
+| Maya M      | 5656454509 | 123,Chennai | 2001-02-22 | Female | D103    | B105    | L102  |
+| Sita SK     | 7798954509 | 451,Chennai | 2001-02-12 | Female | D104    | B102    | L102  |
+| Mohan T     | 9090954509 | 222,Goa     | 2003-06-16 | Male   | D105    | B103    | L106  |
+| Sanjay KJ   | 9898977063 | 345,Delhi   | 2000-01-11 | Male   | D106    | B104    | L104  |
+| Leela       | 8787844566 | 566,Goa     | 2001-09-19 | Female | D107    | B105    | L106  |
+| Shyla RK    | 6767645432 | 111,Delhi   | 1985-01-03 | Female | D108    | B101    | L104  |
+| Aryan J     | 8989897612 | 824,Pune    | 1999-09-29 | Male   | D109    | B103    | L101  |
+| Dhruv       | 7766756789 | 350,Nagpur  | 1982-08-11 | Male   | D110    | B106    | L105  |
++-------------+------------+-------------+------------+--------+---------+---------+-------+
+10 rows in set (0.02 sec)
+
+mysql> select * from blood_stored;
++---------+-----------+-------------+------------+
+| BloodID | BloodType | BloodBankID | DateOfReg  |
++---------+-----------+-------------+------------+
+| B101    | A+        | BB101       | 2022-01-07 |
+| B102    | B+        | BB102       | 2022-01-22 |
+| B103    | O+        | BB102       | 2022-02-22 |
+| B104    | AB+       | BB103       | 2022-01-09 |
+| B105    | A-        | BB105       | 2022-01-19 |
+| B106    | B-        | BB104       | 2022-01-29 |
+| B107    | O-        | BB103       | 2022-01-18 |
+| B108    | AB-       | BB105       | 2022-01-15 |
++---------+-----------+-------------+------------+
+8 rows in set (0.08 sec)
+
+mysql> create table donates(DonorID varchar(10),BloodID VARCHAR(10));
+Query OK, 0 rows affected (1.46 sec)
+
+mysql> INSERT INTO Donates select donorid,bloodid from donor;
+Query OK, 10 rows affected (0.28 sec)
+Records: 10  Duplicates: 0  Warnings: 0
+
+mysql> select * from donates;
++---------+---------+
+| DonorID | BloodID |
++---------+---------+
+| D101    | B101    |
+| D102    | B101    |
+| D108    | B101    |
+| D104    | B102    |
+| D105    | B103    |
+| D109    | B103    |
+| D106    | B104    |
+| D103    | B105    |
+| D107    | B105    |
+| D110    | B106    |
++---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> desc labtech;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+4 rows in set (0.05 sec)
+
+mysql> desc bloodbank;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| ORDERID     | varchar(10) | YES  | UNI | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.15 sec)
+
+mysql> create table works(EmpID varchar(10),BloodBankID VARCHAR(10));
+Query OK, 0 rows affected (0.35 sec)
+
+mysql> select * from bloodbank;
++-------------+---------+-----------+------------------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   |
++-------------+---------+-----------+------------------------+
+| BB101       | O101    | A+ x 2    | Rotary                 |
+| BB102       | O102    | B+ x 3    | Red Cross              |
+| BB103       | O103    | AB+ x 5   | Sankalp India          |
+| BB104       | O104    | AB- x 1   | Athar Blood            |
+| BB105       | O105    | O- x 7    | National Blood Society |
++-------------+---------+-----------+------------------------+
+5 rows in set (0.13 sec)
+
+mysql> select * from labtech;
++-------+----------+-------------+------------+
+| EmpID | Name     | Address     | Phone      |
++-------+----------+-------------+------------+
+| L101  | Ram K    | 111, Pune   | 1213244567 |
+| L102  | Diya     | 143,Chennai | 8888970878 |
+| L103  | Inaya I  | 143,Chennai | 7686887899 |
+| L104  | Amar M   | 789,Delhi   | 7897997099 |
+| L105  | Aarav JN | 890,Nagpur  | 4675786899 |
+| L106  | Keshav   | 234,Goa     | 4567890987 |
++-------+----------+-------------+------------+
+6 rows in set (0.02 sec)
+
+mysql> insert into works values ('L101','BB101');
+Query OK, 1 row affected (0.11 sec)
+
+mysql> insert into works values ('L102','BB102');
+Query OK, 1 row affected (0.15 sec)
+
+mysql> insert into works values ('L103','BB102');
+Query OK, 1 row affected (0.07 sec)
+
+mysql> insert into works values ('L104','BB103');
+Query OK, 1 row affected (0.12 sec)
+
+mysql> insert into works values ('L105','BB104');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> insert into works values ('L106','BB105');
+Query OK, 1 row affected (0.20 sec)
+
+mysql> SELECT * FROM WORKS;
++-------+-------------+
+| EmpID | BloodBankID |
++-------+-------------+
+| L101  | BB101       |
+| L102  | BB102       |
+| L103  | BB102       |
+| L104  | BB103       |
+| L105  | BB104       |
+| L106  | BB105       |
++-------+-------------+
+6 rows in set (0.00 sec)
+
+mysql> DESC MANAGER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.23 sec)
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+
+| EmpID | Name | Phone       | Address     | email           |
++-------+------+-------------+-------------+-----------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   |
+| M104  | Max  | 7787870904  | 55,Mumbai   | max@gmail.com   |
++-------+------+-------------+-------------+-----------------+
+4 rows in set (0.22 sec)
+
+mysql> UPDATE MANAGER SET ADDRESS='55,Nagpur' where empid='M104';
+Query OK, 1 row affected (0.13 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+
+| EmpID | Name | Phone       | Address     | email           |
++-------+------+-------------+-------------+-----------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   |
++-------+------+-------------+-------------+-----------------+
+4 rows in set (0.01 sec)
+
+mysql> INSERT INTO MANAGER VALUES('M105','Tay','3456789098','145,Goa','tay@gmail.com');
+Query OK, 1 row affected (0.14 sec)
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+
+| EmpID | Name | Phone       | Address     | email           |
++-------+------+-------------+-------------+-----------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   |
++-------+------+-------------+-------------+-----------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table manager add BloodBankID varchar(10
+    -> );
+Query OK, 0 rows affected (2.10 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table manager add foreign key (BloodBankID) REFERENCES BLOODBANK(BloodBankID);
+Query OK, 5 rows affected (2.18 sec)
+Records: 5  Duplicates: 0  Warnings: 0
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | NULL        |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | NULL        |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | NULL        |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | NULL        |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | NULL        |
++-------+------+-------------+-------------+-----------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE MANAGER SET BLOODBANKID='BB101' WHERE EMPID='M101';
+Query OK, 1 row affected (0.09 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | NULL        |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | NULL        |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | NULL        |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | NULL        |
++-------+------+-------------+-------------+-----------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> UPDATE MANAGER SET BLOODBANKID='BB102' WHERE EMPID='M102';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MANAGER SET BLOODBANKID='BB103' WHERE EMPID='M103';
+Query OK, 1 row affected (0.14 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MANAGER SET BLOODBANKID='BB104' WHERE EMPID='M104';
+Query OK, 1 row affected (0.29 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> UPDATE MANAGER SET BLOODBANKID='BB105' WHERE EMPID='M105';
+Query OK, 1 row affected (0.17 sec)
+Rows matched: 1  Changed: 1  Warnings: 0
+
+mysql> SELECT * FROM MANAGER;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
++-------+------+-------------+-------------+-----------------+-------------+
+5 rows in set (0.00 sec)
+
+mysql> ALTER TABLE MANAGER RENAME TO Manager_manages;
+Query OK, 0 rows affected (1.33 sec)
+
+mysql> SELECT * FROM MANAGER_manages;
++-------+------+-------------+-------------+-----------------+-------------+
+| EmpID | Name | Phone       | Address     | email           | BloodBankID |
++-------+------+-------------+-------------+-----------------+-------------+
+| M101  | Jay  | 8989870904  | 123,Pune    | jay@gmail.com   | BB101       |
+| M102  | Sia  | 45454570904 | 678,Chennai | sia23@gmail.com | BB102       |
+| M103  | Aja  | 8787870904  | 890,Delhi   | aja@gmail.com   | BB103       |
+| M104  | Max  | 7787870904  | 55,Nagpur   | max@gmail.com   | BB104       |
+| M105  | Tay  | 3456789098  | 145,Goa     | tay@gmail.com   | BB105       |
++-------+------+-------------+-------------+-----------------+-------------+
+5 rows in set (0.13 sec)
+
+mysql> desc hospital;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| HospitalID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID    | varchar(30) | NO   |     | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| Phone      | varchar(30) | YES  |     | NULL    |       |
+| Address    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+
+mysql> select * from hospital;
++------------+---------+----------------+------------+---------+
+| HospitalID | OrderID | Name           | Phone      | Address |
++------------+---------+----------------+------------+---------+
+| H101       | O101    | Ruby Hall      | 3467876543 | Pune    |
+| H102       | O102    | Apollo         | 6678776543 | Mumbai  |
+| H103       | O103    | Columbia Asia  | 6758986543 | Chennai |
+| H104       | O104    | Nobel Hospital | 9898986543 | Pune    |
+| H105       | O105    | Care Hospital  | 9076786543 | Delhi   |
++------------+---------+----------------+------------+---------+
+5 rows in set (0.06 sec)
+
+mysql> select * from bloodbank;
++-------------+---------+-----------+------------------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   |
++-------------+---------+-----------+------------------------+
+| BB101       | O101    | A+ x 2    | Rotary                 |
+| BB102       | O102    | B+ x 3    | Red Cross              |
+| BB103       | O103    | AB+ x 5   | Sankalp India          |
+| BB104       | O104    | AB- x 1   | Athar Blood            |
+| BB105       | O105    | O- x 7    | National Blood Society |
++-------------+---------+-----------+------------------------+
+5 rows in set (0.02 sec)
+
+mysql> create table orders( BloodBankID Varchar(10), OrderID  varchar(10));
+Query OK, 0 rows affected (1.53 sec)
+
+mysql> insert into orders ('BB101','0101');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''BB101','0101')' at line 1
+mysql> ALTER TABLE ORDERS ADD FOREIGN KEY(BLOODBANKID) REFERENCES BLOODBANK(BLOODBANKID);
+Query OK, 0 rows affected (2.96 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE ORDERS ADD FOREIGN KEY(HospitalID) REFERENCES BLOODBANK(HospitalID);
+ERROR 1072 (42000): Key column 'HospitalID' doesn't exist in table
+mysql> alter table orders drop orderid;
+Query OK, 0 rows affected (2.13 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> alter table orders add HospitalID varchar(10);
+Query OK, 0 rows affected (0.59 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> ALTER TABLE ORDERS ADD FOREIGN KEY(HospitalID) REFERENCES BLOODBANK(HospitalID);
+ERROR 3734 (HY000): Failed to add the foreign key constraint. Missing column 'HospitalID' for constraint 'orders_ibfk_2' in the referenced table 'bloodbank'
+mysql> ALTER TABLE ORDERS ADD FOREIGN KEY(HospitalID) REFERENCES Hospital(HospitalID);
+Query OK, 0 rows affected (2.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> select * from bloodbank;
++-------------+---------+-----------+------------------------+
+| BloodBankID | ORDERID | OrderDesc | Name                   |
++-------------+---------+-----------+------------------------+
+| BB101       | O101    | A+ x 2    | Rotary                 |
+| BB102       | O102    | B+ x 3    | Red Cross              |
+| BB103       | O103    | AB+ x 5   | Sankalp India          |
+| BB104       | O104    | AB- x 1   | Athar Blood            |
+| BB105       | O105    | O- x 7    | National Blood Society |
++-------------+---------+-----------+------------------------+
+5 rows in set (0.02 sec)
+
+mysql> select * from hospital'
+    '> ;
+    '> ;^X
+    '> ^C
+mysql>
+mysql> select * from hospital;
++------------+---------+----------------+------------+---------+
+| HospitalID | OrderID | Name           | Phone      | Address |
++------------+---------+----------------+------------+---------+
+| H101       | O101    | Ruby Hall      | 3467876543 | Pune    |
+| H102       | O102    | Apollo         | 6678776543 | Mumbai  |
+| H103       | O103    | Columbia Asia  | 6758986543 | Chennai |
+| H104       | O104    | Nobel Hospital | 9898986543 | Pune    |
+| H105       | O105    | Care Hospital  | 9076786543 | Delhi   |
++------------+---------+----------------+------------+---------+
+5 rows in set (0.00 sec)
+
+mysql> insert into orders ('BB101','0102');
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ''BB101','0102')' at line 1
+mysql> insert into orders values ('BB101','0101');
+ERROR 1452 (23000): Cannot add or update a child row: a foreign key constraint fails (`blooddonation`.`orders`, CONSTRAINT `orders_ibfk_2` FOREIGN KEY (`HospitalID`) REFERENCES `hospital` (`HospitalID`))
+mysql> insert into orders values ('BB101','H101');
+Query OK, 1 row affected (0.32 sec)
+
+mysql> insert into orders values ('BB101','H102');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into orders values ('BB102','H103');
+Query OK, 1 row affected (0.09 sec)
+
+mysql> insert into orders values ('BB101','H104');
+Query OK, 1 row affected (0.13 sec)
+
+mysql> insert into orders values ('BB103','H105');
+Query OK, 1 row affected (0.10 sec)
+
+mysql> SELECT * FROM ORDERS;
++-------------+------------+
+| BloodBankID | HospitalID |
++-------------+------------+
+| BB101       | H101       |
+| BB101       | H102       |
+| BB102       | H103       |
+| BB101       | H104       |
+| BB103       | H105       |
++-------------+------------+
+5 rows in set (0.00 sec)
+
+mysql> alter table orders add primary key (bloodbankid,hospitalid);
+Query OK, 0 rows affected (3.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc orders;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| HospitalID  | varchar(10) | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.05 sec)
+
+mysql> desc works;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| EmpID       | varchar(10) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table works add primary key (empid,bloodbankid);
+Query OK, 0 rows affected (1.99 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc works;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| EmpID       | varchar(10) | NO   | PRI | NULL    |       |
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> alter table donates add primary key (donorid,bloodtypeid);
+ERROR 1072 (42000): Key column 'bloodtypeid' doesn't exist in table
+mysql> alter table donates add primary key (donorid,bloodid);
+Query OK, 0 rows affected (2.25 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc donor;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| DOB     | date        | YES  |     | NULL    |       |
+| Gender  | varchar(10) | YES  |     | NULL    |       |
+| DonorID | varchar(10) | NO   | PRI | NULL    |       |
+| BloodID | varchar(10) | YES  | MUL | NULL    |       |
+| EmpID   | varchar(10) | YES  | MUL | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+8 rows in set (0.09 sec)
+
+mysql> desc donoates;
+ERROR 1146 (42S02): Table 'blooddonation.donoates' doesn't exist
+mysql> desc donates;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| DonorID | varchar(10) | NO   | PRI | NULL    |       |
+| BloodID | varchar(10) | NO   | PRI | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+2 rows in set (0.00 sec)
+
+mysql> select * from donates;
++---------+---------+
+| DonorID | BloodID |
++---------+---------+
+| D101    | B101    |
+| D102    | B101    |
+| D103    | B105    |
+| D104    | B102    |
+| D105    | B103    |
+| D106    | B104    |
+| D107    | B105    |
+| D108    | B101    |
+| D109    | B103    |
+| D110    | B106    |
++---------+---------+
+10 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood_stored            |
+| bloodbank               |
+| customers               |
+| donates                 |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager_manages         |
+| orders                  |
+| personnel               |
+| stock_has               |
+| works                   |
++-------------------------+
+12 rows in set (0.02 sec)
+
+mysql>
