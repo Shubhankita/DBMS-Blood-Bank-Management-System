@@ -1,0 +1,235 @@
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| donor                   |
+| medicalpersonnel        |
+| personnel               |
++-------------------------+
+3 rows in set (0.00 sec)
+
+mysql> desc donor
+    -> ;
++-----------+-------------+------+-----+---------+-------+
+| Field     | Type        | Null | Key | Default | Extra |
++-----------+-------------+------+-----+---------+-------+
+| donorID   | int         | YES  |     | NULL    |       |
+| firstName | varchar(50) | YES  |     | NULL    |       |
+| lastname  | varchar(50) | YES  |     | NULL    |       |
+| address   | varchar(60) | YES  |     | NULL    |       |
+| phone     | varchar(20) | YES  |     | NULL    |       |
+| dob       | date        | YES  |     | NULL    |       |
+| bloodType | varchar(5)  | YES  |     | NULL    |       |
+| quantity  | float       | YES  |     | NULL    |       |
++-----------+-------------+------+-----+---------+-------+
+8 rows in set (0.15 sec)
+
+mysql> desc medicalpersonnel;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstName | varchar(50)  | YES  |     | NULL    |       |
+| lastname  | varchar(50)  | YES  |     | NULL    |       |
+| address   | varchar(60)  | YES  |     | NULL    |       |
+| email     | varchar(100) | YES  |     | NULL    |       |
+| phone     | varchar(20)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.02 sec)
+
+mysql> CREATE TABLE Blood
+    ->              (BloodID varchar2(10) PRIMARY KEY,
+    ->               BloodType char(30),
+    ->               BloodBankID varchar2(10),
+    ->               DateOfReg date);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(10) PRIMARY KEY,
+              BloodType char(30),
+              BloodB' at line 2
+mysql> CREATE TABLE Blood
+    ->              (BloodID varchar2(10) PRIMARY KEY,
+    ->               BloodType char(30),
+    ->               BloodBankID varchar2(10),
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'varchar2(10) PRIMARY KEY,
+              BloodType char(30),
+              BloodB' at line 2
+mysql>
+mysql> CREATE TABLE Blood
+    ->              (BloodID varchar(10) PRIMARY KEY,
+    ->               BloodType varchar(30),
+    ->               BloodBankID varchar(10),
+    ->               DateOfReg date);
+Query OK, 0 rows affected (6.30 sec)
+
+mysql> desc Blood;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  |     | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Stock
+    ->              (StockID varchar(10) PRIMARY KEY,
+    ->               Status varchar(30),
+    ->               Qty decimal);
+Query OK, 0 rows affected (2.44 sec)
+
+mysql> desc Stock;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| Status  | varchar(30)   | YES  |     | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.00 sec)
+
+mysql> CREATE TABLE BloodBank
+    ->              (BloodBankID varchar(10) PRIMARY KEY,
+    ->               OrderID varchar(30),
+    ->       OrderDesc varchar(50),
+    ->               Name varchar(30));
+Query OK, 0 rows affected (0.66 sec)
+
+mysql> desc BloodBank;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID     | varchar(30) | YES  |     | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.14 sec)
+
+mysql> CREATE TABLE Manager
+    ->              (EmpID varchar(10) PRIMARY KEY,
+    ->               Name varchar(30)
+    ->               Phone varchar(30),
+    ->       Address varchar(50),
+    ->               email varchar(60),
+    ->               );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Phone varchar(30),
+      Address varchar(50),
+              email varchar(60),
+ ' at line 4
+mysql>
+mysql> CREATE TABLE Manager
+    ->              (EmpID varchar(10) PRIMARY KEY,
+    ->               Name varchar(30),
+    ->               Phone varchar(30),
+    ->       Address varchar(50),
+    ->               email varchar(60),
+    ->               );
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near ')' at line 7
+mysql>
+mysql>
+mysql> CREATE TABLE Manager
+    ->              (EmpID varchar(10) PRIMARY KEY,
+    ->               Name varchar(30),
+    ->               Phone varchar(30),
+    ->       Address varchar(50),
+    ->               email varchar(60)
+    ->               );
+Query OK, 0 rows affected (0.64 sec)
+
+mysql> desc Manager
+    -> ;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.39 sec)
+
+mysql> CREATE TABLE Hospital
+    ->              (HospitalID varchar(10) PRIMARY KEY,
+    ->       OrderID varchar(30),
+    ->               Name varchar(30),
+    ->               Phone varchar(30),
+    ->       Address varchar(50));
+Query OK, 0 rows affected (0.65 sec)
+
+mysql> desc hospital;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| HospitalID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID    | varchar(30) | YES  |     | NULL    |       |
+| Name       | varchar(30) | YES  |     | NULL    |       |
+| Phone      | varchar(30) | YES  |     | NULL    |       |
+| Address    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.00 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| manager                 |
+| medicalpersonnel        |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.02 sec)
+
+mysql> Alter Table medicalpersonnel TO LabTech;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'TO LabTech' at line 1
+mysql>
+mysql> Alter Table medicalpersonnel RENAME LabTech;
+Query OK, 0 rows affected (1.12 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.14 sec)
+
+mysql> DESC LABTECH;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstName | varchar(50)  | YES  |     | NULL    |       |
+| lastname  | varchar(50)  | YES  |     | NULL    |       |
+| address   | varchar(60)  | YES  |     | NULL    |       |
+| email     | varchar(100) | YES  |     | NULL    |       |
+| phone     | varchar(20)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.21 sec)
+
+mysql> DESC personnel;
++-----------+--------------+------+-----+---------+-------+
+| Field     | Type         | Null | Key | Default | Extra |
++-----------+--------------+------+-----+---------+-------+
+| firstName | varchar(50)  | YES  |     | NULL    |       |
+| lastname  | varchar(50)  | YES  |     | NULL    |       |
+| address   | varchar(60)  | YES  |     | NULL    |       |
+| email     | varchar(100) | YES  |     | NULL    |       |
+| phone     | varchar(20)  | YES  |     | NULL    |       |
+| dob       | date         | YES  |     | NULL    |       |
++-----------+--------------+------+-----+---------+-------+
+6 rows in set (0.00 sec)
+
+mysql>

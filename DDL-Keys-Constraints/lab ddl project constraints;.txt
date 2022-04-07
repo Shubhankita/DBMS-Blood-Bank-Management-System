@@ -1,0 +1,371 @@
+Microsoft Windows [Version 10.0.19044.1526]
+(c) Microsoft Corporation. All rights reserved.
+
+C:\Users\shubh>cd C:\Program Files\MySQL\MySQL Server 8.0\bin\
+
+C:\Program Files\MySQL\MySQL Server 8.0\bin>mysql -u root -p
+Enter password: ********
+Welcome to the MySQL monitor.  Commands end with ; or \g.
+Your MySQL connection id is 8
+Server version: 8.0.28 MySQL Community Server - GPL
+
+Copyright (c) 2000, 2022, Oracle and/or its affiliates.
+
+Oracle is a registered trademark of Oracle Corporation and/or its
+affiliates. Other names may be trademarks of their respective
+owners.
+
+Type 'help;' or '\h' for help. Type '\c' to clear the current input statement.
+
+mysql> use blooddonation
+Database changed
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| manager                 |
+| personnel               |
+| stock                   |
++-------------------------+
+8 rows in set (0.88 sec)
+
+mysql> desc manager;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | YES  |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.57 sec)
+
+mysql> drop manager;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'manager' at line 1
+mysql> drop table manager;
+Query OK, 0 rows affected (2.69 sec)
+
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| personnel               |
+| stock                   |
++-------------------------+
+7 rows in set (0.01 sec)
+
+mysql> CREATE TABLE Manager
+    ->  (EmpID varchar(10) PRIMARY KEY,
+    -> Name varchar(30),
+    -> show tables;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'show tables' at line 4
+mysql> show tables;
++-------------------------+
+| Tables_in_blooddonation |
++-------------------------+
+| blood                   |
+| bloodbank               |
+| donor                   |
+| hospital                |
+| labtech                 |
+| personnel               |
+| stock                   |
++-------------------------+
+7 rows in set (0.00 sec)
+
+mysql> CREATE TABLE Manager
+    ->  (EmpID varchar(10) PRIMARY KEY,
+    ->  Name varchar(30) NOT NULL,
+    ->  Phone varchar(30),
+    -> Address varchar(50),
+    -> email varchar(60));
+Query OK, 0 rows affected (1.27 sec)
+
+mysql> DESC MANAGER;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.12 sec)
+
+mysql> DROP HOSPITAL;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'HOSPITAL' at line 1
+mysql> DROP TABLE HOSPITAL;
+Query OK, 0 rows affected (0.87 sec)
+
+mysql>  CREATE TABLE Hospital
+    ->  (HospitalID varchar(10) PRIMARY KEY,
+    ->  OrderID varchar(30) NOT NULL,
+    ->  Name varchar(30) NOT NULL,
+    -> Phone varchar(30),
+    ->  Address varchar(50));
+Query OK, 0 rows affected (0.44 sec)
+
+mysql> DESC HOSPITAL
+    -> ;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| HospitalID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID    | varchar(30) | NO   |     | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| Phone      | varchar(30) | YES  |     | NULL    |       |
+| Address    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.10 sec)
+
+mysql> drop table stock;
+Query OK, 0 rows affected (0.97 sec)
+
+mysql> CREATE TABLE Stock
+    -> (StockID varchar(10) PRIMARY KEY,
+    -> BloodID VARCHAR(10),
+    -> Qty Decimal);
+Query OK, 0 rows affected (0.91 sec)
+
+mysql> desc stock
+    -> ;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  |     | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.05 sec)
+
+mysql> Alter table hospital modify (Name varchar(30) NOT NULL);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near '(Name varchar(30) NOT NULL)' at line 1
+mysql> Alter table hospital modify Name varchar(30) NOT NULL;
+Query OK, 0 rows affected (0.39 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC HOSPITAL;
++------------+-------------+------+-----+---------+-------+
+| Field      | Type        | Null | Key | Default | Extra |
++------------+-------------+------+-----+---------+-------+
+| HospitalID | varchar(10) | NO   | PRI | NULL    |       |
+| OrderID    | varchar(30) | NO   |     | NULL    |       |
+| Name       | varchar(30) | NO   |     | NULL    |       |
+| Phone      | varchar(30) | YES  |     | NULL    |       |
+| Address    | varchar(50) | YES  |     | NULL    |       |
++------------+-------------+------+-----+---------+-------+
+5 rows in set (0.10 sec)
+
+mysql> ALTER TABLE BLOODBANK MODIFY ORDERID varchar(10) UNIQUE;
+Query OK, 0 rows affected (2.82 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC BloodBank;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| ORDERID     | varchar(10) | YES  | UNI | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.06 sec)
+
+mysql> select * from personnel;
++-----------+----------+-----------+---------------+------------+------------+
+| firstName | lastname | address   | email         | phone      | dob        |
++-----------+----------+-----------+---------------+------------+------------+
+| Alex      | LAX      | Australia | xyz@gmail.com | 4556789098 | 2000-03-01 |
+| Sia       | l        | UK        | SIA@gmail.com | 34567890   | 2001-07-01 |
+| Kia       | K        | USA       | KIA@gmail.com | 111227890  | 2002-07-02 |
+| Mia       | M        | US        | MIA@gmail.com | 111227890  | 2002-07-02 |
++-----------+----------+-----------+---------------+------------+------------+
+4 rows in set (0.05 sec)
+
+mysql> Alter table manager add constraint emp_ck CHECK(EmpID BETWEEN 1500 AND 3000);
+Query OK, 0 rows affected (4.30 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc manager;
++---------+-------------+------+-----+---------+-------+
+| Field   | Type        | Null | Key | Default | Extra |
++---------+-------------+------+-----+---------+-------+
+| EmpID   | varchar(10) | NO   | PRI | NULL    |       |
+| Name    | varchar(30) | NO   |     | NULL    |       |
+| Phone   | varchar(30) | YES  |     | NULL    |       |
+| Address | varchar(50) | YES  |     | NULL    |       |
+| email   | varchar(60) | YES  |     | NULL    |       |
++---------+-------------+------+-----+---------+-------+
+5 rows in set (0.05 sec)
+
+mysql> Alter table Stock Add Constraint Blood_fk FOREIGN KEY(BloodID) REFERENCES Blood(BloodID);
+Query OK, 0 rows affected (4.02 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> DESC STOCK;
++---------+---------------+------+-----+---------+-------+
+| Field   | Type          | Null | Key | Default | Extra |
++---------+---------------+------+-----+---------+-------+
+| StockID | varchar(10)   | NO   | PRI | NULL    |       |
+| BloodID | varchar(10)   | YES  | MUL | NULL    |       |
+| Qty     | decimal(10,0) | YES  |     | NULL    |       |
++---------+---------------+------+-----+---------+-------+
+3 rows in set (0.06 sec)
+
+mysql> Alter table Blood Add Constraint BloodBank_fk FOREIGN KEY(BloodBankID) REFERENCES BloodBank(BloodBankID);
+Query OK, 0 rows affected (4.08 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> desc blood;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodID     | varchar(10) | NO   | PRI | NULL    |       |
+| BloodType   | varchar(30) | YES  |     | NULL    |       |
+| BloodBankID | varchar(10) | YES  | MUL | NULL    |       |
+| DateOfReg   | date        | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.03 sec)
+
+mysql> Alter Table Manager Drop constraint emp_chk;
+ERROR 3940 (HY000): Constraint 'emp_chk' does not exist.
+mysql> Alter table manager add constraint emp_ck CHECK(EmpID BETWEEN 1500 AND 3000);
+ERROR 3822 (HY000): Duplicate check constraint name 'emp_ck'.
+mysql> Alter Table Manager Drop constraik;
+ERROR 1091 (42000): Can't DROP 'constraik'; check that column/key exists
+mysql>
+mysql>
+mysql> Alter Table Manager Drop constraint emp_ck;
+Query OK, 0 rows affected (0.31 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql> Alter Table BloodBank Disable Constraint UNIQUE CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint UNIQUE CASCADE' at line 1
+mysql> Alter Table BloodBank Disable Constraint UNIQUe(ORDERID) CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint UNIQUe(ORDERID) CASCADE' at line 1
+mysql> Alter Table BloodBank Disable Constraint UNIQUe(ORDERID) CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint UNIQUe(ORDERID) CASCADE' at line 1
+mysql>
+mysql>
+mysql> Alter Table BloodBank Disable Constraint UNIQUe(ORDERID);
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint UNIQUe(ORDERID)' at line 1
+mysql>
+mysql> Alter Table BloodBank Disable Constraint ORDERID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint ORDERID' at line 1
+mysql>
+mysql> Alter Table BloodBank Disable Constraint UQ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'Constraint UQ' at line 1
+mysql>
+mysql> \
+mysql> SHOW CREATE TABLE BLOODBANK;
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| Table     | Create Table                                                                                                                                                                                                                                                                                                           |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+| BLOODBANK | CREATE TABLE `bloodbank` (
+  `BloodBankID` varchar(10) NOT NULL,
+  `ORDERID` varchar(10) DEFAULT NULL,
+  `OrderDesc` varchar(50) DEFAULT NULL,
+  `Name` varchar(30) DEFAULT NULL,
+  PRIMARY KEY (`BloodBankID`),
+  UNIQUE KEY `ORDERID` (`ORDERID`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci |
++-----------+------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------+
+1 row in set (0.11 sec)
+
+mysql> select COLUMN_NAME, CONSTRAINT_NAME, REFERENCED_COLUMN_NAME, REFERENCED_TABLE_NAME
+    -> from information_schema.KEY_COLUMN_USAGE
+    ->  where TABLE_NAME = 'BloodBank';
++-------------+-----------------+------------------------+-----------------------+
+| COLUMN_NAME | CONSTRAINT_NAME | REFERENCED_COLUMN_NAME | REFERENCED_TABLE_NAME |
++-------------+-----------------+------------------------+-----------------------+
+| ORDERID     | ORDERID         | NULL                   | NULL                  |
+| BloodBankID | PRIMARY         | NULL                   | NULL                  |
++-------------+-----------------+------------------------+-----------------------+
+2 rows in set (0.18 sec)
+
+mysql> ALTER TABLE table_name
+    ->  where TABLE_NAME = 'BloodBank';
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'where TABLE_NAME = 'BloodBank'' at line 2
+mysql>
+mysql> ALTER TABLE BloodBank
+    -> DISABLE CONSTRAINT ORDERID;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ORDERID' at line 2
+mysql>
+mysql> ALTER TABLE BLOODBANK DROP CONSTRAINT UNIQUE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UNIQUE' at line 1
+mysql> ALTER TABLE BLOODBANK DROP CONSTRAINT UNIQUE KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'UNIQUE KEY' at line 1
+mysql>
+mysql> ALTER TABLE BLOODBANK DROP CONSTRAINT PRIMARY KEY;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'PRIMARY KEY' at line 1
+mysql>
+mysql>
+mysql> SELECT *
+    -> FROM   information_schema.table_constraints
+    -> WHERE  table_schema = schema()
+    -> AND    table_name = 'BLOODBANK';
++--------------------+-------------------+-----------------+---------------+------------+-----------------+----------+
+| CONSTRAINT_CATALOG | CONSTRAINT_SCHEMA | CONSTRAINT_NAME | TABLE_SCHEMA  | TABLE_NAME | CONSTRAINT_TYPE | ENFORCED |
++--------------------+-------------------+-----------------+---------------+------------+-----------------+----------+
+| def                | blooddonation     | ORDERID         | blooddonation | bloodbank  | UNIQUE          | YES      |
+| def                | blooddonation     | PRIMARY         | blooddonation | bloodbank  | PRIMARY KEY     | YES      |
++--------------------+-------------------+-----------------+---------------+------------+-----------------+----------+
+2 rows in set (0.04 sec)
+
+mysql> ALTER TABLE BLOODBANK DISABLE CONSTRAINT PRIMARY CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT PRIMARY CASCADE' at line 1
+mysql> ALTER TABLE BLOODBANK DISABLE CONSTRAINT PRIMARY CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT PRIMARY CASCADE' at line 1
+mysql> ALTER TABLE BLOODBANK DISABLE CONSTRAINT ORDERID CASCADE;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT ORDERID CASCADE' at line 1
+mysql>
+mysql> Alter table manager add constraint emp_ck CHECK(EmpID BETWEEN 1500 AND 3000);
+Query OK, 0 rows affected (3.35 sec)
+Records: 0  Duplicates: 0  Warnings: 0
+
+mysql>
+mysql> ALTER TABLE MANAGER DISABLE CONSTRAINT emp_ck;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT emp_ck' at line 1
+mysql> ALTER TABLE MANAGER DISABLE CONSTRAINT emp_ck cascase
+    -> ;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT emp_ck cascase' at line 1
+mysql> ALTER TABLE MANAGER DISABLE CONSTRAINT emp_ck cascade;
+ERROR 1064 (42000): You have an error in your SQL syntax; check the manual that corresponds to your MySQL server version for the right syntax to use near 'CONSTRAINT emp_ck cascade' at line 1
+mysql>
+mysql>
+mysql> alter table bloodbank disable keys;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> desc bloodbank;
++-------------+-------------+------+-----+---------+-------+
+| Field       | Type        | Null | Key | Default | Extra |
++-------------+-------------+------+-----+---------+-------+
+| BloodBankID | varchar(10) | NO   | PRI | NULL    |       |
+| ORDERID     | varchar(10) | YES  | UNI | NULL    |       |
+| OrderDesc   | varchar(50) | YES  |     | NULL    |       |
+| Name        | varchar(30) | YES  |     | NULL    |       |
++-------------+-------------+------+-----+---------+-------+
+4 rows in set (0.08 sec)
+
+mysql> alter table bloodbank enable keys;
+Query OK, 0 rows affected, 1 warning (0.13 sec)
+
+mysql> alter table bloodbank disable keys;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql> alter table bloodbank enable keys;
+Query OK, 0 rows affected, 1 warning (0.04 sec)
+
+mysql>
