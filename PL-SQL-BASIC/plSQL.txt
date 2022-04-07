@@ -1,0 +1,693 @@
+
+SQL*Plus: Release 11.2.0.4.0 Production on Thu Mar 10 13:01:23 2022
+
+Copyright (c) 1982, 2013, Oracle.  All rights reserved.
+
+Enter user-name: RA1911033010035/RA1911033010035@sasirekhasankar-m2.c6hfisyr3ugy.us-east-1.rds.amazonaws.com:1521/M2
+
+Connected to:
+Oracle Database 19c Enterprise Edition Release 19.0.0.0.0 - Production
+
+SQL> DECLARE
+  2     -- variable declaration
+  3     message  varchar2(20):= 'Hello World!';
+  4  BEGIN
+  5     --output
+  6     dbms_output.put_line(message);
+  7  END;
+  8  /
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     -- variable declaration
+  3     message  varchar2(20):= 'Hello World!';
+  4  BEGIN
+  5     --output
+  6     dbms_output.put_line(message);
+  7  END;
+  8  /
+
+PL/SQL procedure successfully completed.
+
+SQL> pl sql hello world program
+SP2-0734: unknown command beginning "pl sql hel..." - rest of line ignored.
+SQL> DECLARE
+  2     -- variable declaration
+  3     message  varchar2(20):= 'Hello World!';
+  4  BEGIN
+  5     --output
+  6     dbms_output.put_line(message);
+  7  END;
+  8  /
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     -- variable declaration
+  3     message  varchar2(20):= 'Hello World!';
+  4  BEGIN
+  5     --output
+  6     dbms_output.put_line(message);
+  7  END;
+  8  /
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     a integer := 30;
+  3     b integer := 40;
+  4     c integer;
+  5     f real;
+  6  BEGIN
+  7     c := a + b;
+  8     dbms_output.put_line('Value of c: ' || c);
+  9  --To show the floating type usage
+ 10     f := 100.0/3.0;
+ 11     dbms_output.put_line('Value of f: ' || f);
+ 12  END;
+ 13  /
+
+PL/SQL procedure successfully completed.
+
+SQL> set serveroutput on;
+SQL> DECLARE
+  2     a integer := 30;
+  3     b integer := 40;
+  4     c integer;
+  5     f real;
+  6  BEGIN
+  7     c := a + b;
+  8     dbms_output.put_line('Value of c: ' || c);
+  9  --To show the floating type usage
+ 10     f := 100.0/3.0;
+ 11     dbms_output.put_line('Value of f: ' || f);
+ 12  END;
+ 13  /
+Value of c: 70
+Value of f: 33.33333333333333333333333333333333333333
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     -- variable declaration
+  3     message  varchar2(20):= 'Hello World!';
+  4  BEGIN
+  5     --output
+  6     dbms_output.put_line(message);
+  7  END;
+  8  /
+Hello World!
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2   -- Global variables
+  3     num1 number := 95;
+  4     num2 number := 85;
+  5  BEGIN
+  6     dbms_output.put_line('Outer Variable num1: ' || num1);
+  7     dbms_output.put_line('Outer Variable num2: ' || num2);
+  8     DECLARE
+  9        -- Local variables
+ 10        num1 number := 195;
+ 11        num2 number := 185;
+ 12     BEGIN
+ 13        dbms_output.put_line('Inner Variable num1: ' || num1);
+ 14        dbms_output.put_line('Inner Variable num2: ' || num2);
+ 15     END;
+ 16
+ 17  END;
+ 18  /
+Outer Variable num1: 95
+Outer Variable num2: 85
+Inner Variable num1: 195
+Inner Variable num2: 185
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2   -- Global variables
+  3     num1 number := 95;
+  4     num2 number := 85;
+  5  BEGIN
+  6     dbms_output.put_line('Outer Variable num1: ' || num1);
+  7     dbms_output.put_line('Outer Variable num2: ' || num2);
+  8     DECLARE
+  9        -- Local variables
+ 10        num1 number := 195;
+ 11        num2 number := 185;
+ 12     BEGIN
+ 13        dbms_output.put_line('Inner Variable num1: ' || num1);
+ 14        dbms_output.put_line('Inner Variable num2: ' || num2);
+ 15     END;
+ 16              dbms_output.put_line('Inner Variable num1: ' || num1);
+ 17             dbms_output.put_line('Inner Variable num2: ' || num2);
+ 18  END;
+ 19  /
+Outer Variable num1: 95
+Outer Variable num2: 85
+Inner Variable num1: 195
+Inner Variable num2: 185
+Inner Variable num1: 95
+Inner Variable num2: 85
+
+PL/SQL procedure successfully completed.
+
+SQL> select * from employee;
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+         1 Harsh
+SRm                                                   8000.56
+CSE
+
+         2 Alexis
+Chennai                                               6690.11
+CSE
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+
+         3 Anna
+Delhi                                                  6623.9
+ECE
+
+         4 Jean
+Mumbai                                               24479.11
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+CIVIL
+
+         5 Mala
+Pune                                                 24479.11
+CIVIL
+
+         6 Malax
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+Goa                                                    234.71
+CSE
+
+       108 hi
+dfg b                                                    4567
+
+
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+       109 hi
+dfg b                                                    4567
+
+
+       110 hi
+dfg b                                                    4567
+hiko
+
+    EMP_ID NAME
+---------- ------------------------------
+ADDRESS                                                SALARY
+-------------------------------------------------- ----------
+DEPT
+--------------------
+
+
+9 rows selected.
+
+SQL> DECLARE
+  2  SALARY1 employee1.salary % TYPE;
+  3  ECODE employee1.emp_id % TYPE;
+  4  BEGIN
+  5  Ecode :=&Ecode;
+  6  Select salary into salary1  from employee1 where emp_id = ECODE;
+  7  dbms_output.put_line('Salary of ' || ECODE || 'is = || salary1');
+  8  END;
+  9  /
+Enter value for ecode: 108
+old   5: Ecode :=&Ecode;
+new   5: Ecode :=108;
+SALARY1 employee1.salary % TYPE;
+        *
+ERROR at line 2:
+ORA-06550: line 2, column 9:
+PLS-00201: identifier 'EMPLOYEE1.SALARY' must be declared
+ORA-06550: line 0, column 0:
+PL/SQL: Compilation unit analysis terminated
+
+
+SQL> desc employee;
+ Name                                      Null?    Type
+ ----------------------------------------- -------- ----------------------------
+ EMP_ID                                    NOT NULL NUMBER(38)
+ NAME                                               VARCHAR2(30)
+ ADDRESS                                            VARCHAR2(50)
+ SALARY                                             NUMBER(10,2)
+ DEPT                                               VARCHAR2(20)
+
+SQL> DECLARE
+  2  SALARY1 employee1.salary % TYPE;
+  3  ECODE employee1.emp_id % TYPE;
+  4  BEGIN
+  5  Ecode :=&Ecode;
+  6  Select salary into salary1  from employee1 where emp_id = ECODE;
+  7  dbms_output.put_line('Salary of ' || ECODE || 'is = || salary1');
+  8  END;
+  9  Select salary into salary1  from employee1 where emp_id = ECODE;
+ 10  /
+Enter value for ecode: ytu
+old   5: Ecode :=&Ecode;
+new   5: Ecode :=ytu;
+Select salary into salary1  from employee1 where emp_id = ECODE;
+*
+ERROR at line 9:
+ORA-06550: line 9, column 1:
+PLS-00103: Encountered the symbol "SELECT"
+
+
+SQL>
+SQL>
+SQL>
+SQL>
+SQL> DECLARE
+  2  SALARY1 employee.salary % TYPE;
+  3  ECODE employee.emp_id % TYPE;
+  4  BEGIN
+  5  Ecode :=&Ecode;
+  6  Select salary into salary1  from employee where emp_id = ECODE;
+  7  dbms_output.put_line('Salary of ' || ECODE || 'is = || salary1');
+  8  END;
+  9  /
+Enter value for ecode: 108
+old   5: Ecode :=&Ecode;
+new   5: Ecode :=108;
+Salary of 108is = || salary1
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2  SALARY1 employee.salary % TYPE;
+  3  ECODE employee.emp_id % TYPE;
+  4  BEGIN
+  5  Ecode :=&Ecode;
+  6  Select salary into salary1  from employee where emp_id = ECODE;
+  7  dbms_output.put_line('Salary of ' || ECODE || 'is = '|| salary1);
+  8  END;
+  9  /
+Enter value for ecode: 108
+old   5: Ecode :=&Ecode;
+new   5: Ecode :=108;
+Salary of 108is = 4567
+
+PL/SQL procedure successfully completed.
+
+SQL> declare
+  2  n number:=&n;
+  3
+  4  begin
+  5  if mod(n,2)=0
+  6  then
+  7  dbms_output.put_line('number is even');
+  8  else
+  9  dbms_output.put_line('number is odd');
+ 10  end if;
+ 11  end;
+ 12  /
+Enter value for n: 2
+old   2: n number:=&n;
+new   2: n number:=2;
+number is even
+
+PL/SQL procedure successfully completed.
+
+SQL> Declare
+  2  a number;
+  3  b number;
+  4  c number;
+  5  Begin
+  6  dbms_output.put_line('Enter a:');
+  7  a:=&a;
+  8  dbms_output.put_line('Enter b:');
+  9  b:=&b;
+ 10  dbms_output.put_line('Enter c:');
+ 11  c:=&c;
+ 12  if (a>b) and (a>c) then
+ 13  dbms_output.put_line('A is Maximum');
+ 14  elsif (b>a) and (b>c) then
+ 15  dbms_output.put_line('B is Maximum');
+ 16  else
+ 17  dbms_output.put_line('C is Maximum');
+ 18  end if;
+ 19  End;
+ 20  /
+Enter value for a: 1
+old   7: a:=&a;
+new   7: a:=1;
+Enter value for b: 2
+old   9: b:=&b;
+new   9: b:=2;
+Enter value for c: 3
+old  11: c:=&c;
+new  11: c:=3;
+Enter a:
+Enter b:
+Enter c:
+C is Maximum
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     a number(3) := 1000;
+  3  BEGIN
+  4     -- check the boolean condition using if statement
+  5     IF( a < 20 ) THEN
+  6        -- if condition is true then print the following
+  7        dbms_output.put_line('a is less than 20 ' );
+  8     ELSE
+  9        dbms_output.put_line('a is not less than 20 ' );
+ 10     END IF;
+ 11     dbms_output.put_line('value of a is : ' || a);
+ 12  END;
+ 13  /
+DECLARE
+*
+ERROR at line 1:
+ORA-06502: PL/SQL: numeric or value error: number precision too large
+ORA-06512: at line 2
+
+
+SQL> DECLARE
+  2     a number(3) := 100;
+  3  BEGIN
+  4     -- check the boolean condition using if statement
+  5     IF( a < 20 ) THEN
+  6        -- if condition is true then print the following
+  7        dbms_output.put_line('a is less than 20 ' );
+  8     ELSE
+  9        dbms_output.put_line('a is not less than 20 ' );
+ 10     END IF;
+ 11     dbms_output.put_line('value of a is : ' || a);
+ 12  END;
+ 13  /
+a is not less than 20
+value of a is : 100
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: A
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := A;
+   grade char(1) := A;
+                    *
+ERROR at line 2:
+ORA-06550: line 2, column 21:
+PLS-00201: identifier 'A' must be declared
+ORA-06550: line 0, column 0:
+PL/SQL: Compilation unit analysis terminated
+
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: a
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := a;
+   grade char(1) := a;
+                    *
+ERROR at line 2:
+ORA-06550: line 2, column 21:
+PLS-00201: identifier 'A' must be declared
+ORA-06550: line 0, column 0:
+PL/SQL: Compilation unit analysis terminated
+
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: a
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := a;
+   grade char(1) := a;
+                    *
+ERROR at line 2:
+ORA-06550: line 2, column 21:
+PLS-00201: identifier 'A' must be declared
+ORA-06550: line 0, column 0:
+PL/SQL: Compilation unit analysis terminated
+
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: A
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := A;
+   grade char(1) := A;
+                    *
+ERROR at line 2:
+ORA-06550: line 2, column 21:
+PLS-00201: identifier 'A' must be declared
+ORA-06550: line 0, column 0:
+PL/SQL: Compilation unit analysis terminated
+
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: 'A'
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := 'A';
+Excellent
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     grade char(1) := &grade;
+  3  BEGIN
+  4     CASE grade
+  5        when 'A' then dbms_output.put_line('Excellent');
+  6        when 'B' then dbms_output.put_line('Very good');
+  7        when 'C' then dbms_output.put_line('Well done');
+  8        when 'D' then dbms_output.put_line('You passed');
+  9        when 'F' then dbms_output.put_line('Better try again');
+ 10        else dbms_output.put_line('No such grade');
+ 11     END CASE;
+ 12  END;
+ 13  /
+Enter value for grade: 'B'
+old   2:    grade char(1) := &grade;
+new   2:    grade char(1) := 'B';
+Very good
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     x number := 10;
+  3  BEGIN
+  4     LOOP
+  5        dbms_output.put_line(x);
+  6        x := x + 10;
+  7        IF x > 50 THEN
+  8           exit;
+  9        END IF;
+ 10     END LOOP;
+ 11     -- after exit, control resumes here
+ 12     dbms_output.put_line('After Exit x is: ' || x);
+ 13  END;
+ 14  /
+10
+20
+30
+40
+50
+After Exit x is: 60
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     i number(3);
+  3     j number(3);
+  4  BEGIN
+  5     i := 2;
+  6     LOOP
+  7        j:= 2;
+  8        LOOP
+  9           exit WHEN ((mod(i, j) = 0) or (j = i));
+ 10           j := j +1;
+ 11        END LOOP;
+ 12     IF (j = i ) THEN
+ 13        dbms_output.put_line(i || ' is prime');
+ 14     END IF;
+ 15     i := i + 1;
+ 16     exit WHEN i = 50;
+ 17     END LOOP;
+ 18  END;
+ 19  /
+2 is prime
+3 is prime
+5 is prime
+7 is prime
+11 is prime
+13 is prime
+17 is prime
+19 is prime
+23 is prime
+29 is prime
+31 is prime
+37 is prime
+41 is prime
+43 is prime
+47 is prime
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL> DECLARE
+  2     a number(2);
+  3  BEGIN
+  4     FOR a in 10 .. 20 LOOP
+  5        dbms_output.put_line('value of a: ' || a);
+  6    END LOOP;
+  7  END;
+  8  /
+value of a: 10
+value of a: 11
+value of a: 12
+value of a: 13
+value of a: 14
+value of a: 15
+value of a: 16
+value of a: 17
+value of a: 18
+value of a: 19
+value of a: 20
+
+PL/SQL procedure successfully completed.
+
+SQL> DECLARE
+  2     a number(2) := 10;
+  3  BEGIN
+  4     WHILE a < 20 LOOP
+  5        dbms_output.put_line('value of a: ' || a);
+  6        a := a + 1;
+  7     END LOOP;
+  8  END;
+  9  /
+value of a: 10
+value of a: 11
+value of a: 12
+value of a: 13
+value of a: 14
+value of a: 15
+value of a: 16
+value of a: 17
+value of a: 18
+value of a: 19
+
+PL/SQL procedure successfully completed.
+
+SQL>
+SQL> declare
+  2  a number(10);
+  3  b number(10);
+  4  begin
+  5
+  6  a:=&a;
+  7  b:=&b;
+  8  dbms_output.put_line('THE PREV VALUES OF A AND B WERE'); dbms_output.put_line(a);
+  9  dbms_output.put_line(b); a:=a+b;
+ 10
+ 11  b:=a-b; a:=a-b;
+ 12  dbms_output.put_line('THE VALUES OF A AND B ARE'); dbms_output.put_line(a);
+ 13  dbms_output.put_line(b); end;
+ 14  /
+Enter value for a: 1
+old   6: a:=&a;
+new   6: a:=1;
+Enter value for b: 2
+old   7: b:=&b;
+new   7: b:=2;
+THE PREV VALUES OF A AND B WERE
+1
+2
+THE VALUES OF A AND B ARE
+2
+1
+
+PL/SQL procedure successfully completed.
+
+SQL>
